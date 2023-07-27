@@ -1,0 +1,36 @@
+{
+  "name": "ims-ui",
+  "version": "0.0.29",
+  "description": "ims-ui",
+  "main": "dist/ims-ui.umd.js",
+  "module": "dist/ims-ui.mjs",
+  "exports": {
+    ".": {
+      "require": "dist/ims-ui.umd.js",
+      "module": "dist/ims-ui.mjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://localhost:4873/"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@ims-ui/components": "workspace:^",
+    "@ims-ui/constants": "workspace:^",
+    "@ims-ui/hooks": "workspace:^",
+    "@ims-ui/types": "workspace:^",
+    "@ims-ui/utils": "workspace:^"
+  },
+  "keywords": [
+    "ims-ui"
+  ],
+  "author": "Van Chin",
+  "license": "MIT"
+}

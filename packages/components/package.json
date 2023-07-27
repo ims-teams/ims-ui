@@ -1,0 +1,29 @@
+{
+  "name": "@ims-ui/components",
+  "version": "0.0.29",
+  "description": "",
+  "main": "dist/ims-ui-components.umd.js",
+  "module": "dist/ims-ui-components.mjs",
+  "exports": {
+    ".": {
+      "require": "dist/ims-ui-components.umd.js",
+      "module": "dist/ims-ui-components.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "Van Chin",
+  "license": "MIT",
+  "dependencies": {
+    "@ims-ui/constants": "workspace:^",
+    "@ims-ui/hooks": "workspace:^",
+    "@ims-ui/types": "workspace:^",
+    "@ims-ui/utils": "workspace:^"
+  }
+}

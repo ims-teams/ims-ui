@@ -1,0 +1,21 @@
+{
+  "name": "@ims-ui/types",
+  "version": "0.0.29",
+  "description": "",
+  "main": "index.ts",
+  "module": "index.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://localhost:4873/"
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "Van Chin",
+  "license": "MIT"
+}

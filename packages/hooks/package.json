@@ -1,0 +1,27 @@
+{
+  "name": "@ims-ui/hooks",
+  "version": "0.0.29",
+  "description": "",
+  "main": "./dist/ims-ui-hooks.umd.js",
+  "module": "./dist/ims-ui-hooks.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/ims-ui-hooks.umd.js",
+      "module": "./dist/ims-ui-hooks.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://localhost:4873/"
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "Van Chin",
+  "license": "MIT"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@ims-ui/constants",
+  "version": "0.0.29",
+  "description": "",
+  "main": "./dist/ims-ui-constants.umd.js",
+  "module": "./dist/ims-ui-constants.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/ims-ui-constants.umd.js",
+      "module": "./dist/ims-ui-constants.mjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "http://localhost:4873/"
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "Van Chin",
+  "license": "MIT"
+}
