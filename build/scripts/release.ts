@@ -78,7 +78,7 @@ async function publishPackage(pkgName: string, version: string) {
 
   try {
     // npm publish --registry http://localhost:4873/
-    execSync("pnpm publish --registry http://localhost:4873/", {
+    execSync("pnpm publish --registry http://localhost:4873/ --no-git-checks", {
       cwd: pkgRoot,
       stdio: "inherit",
     });

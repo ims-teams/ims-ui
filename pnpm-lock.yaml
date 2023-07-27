@@ -191,6 +191,13 @@ importers:
       '@ims-ui/utils':
         specifier: workspace:^
         version: link:../utils
+    devDependencies:
+      sortablejs:
+        specifier: ^1.15.0
+        version: 1.15.0
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
 
   packages/constants: {}
 
@@ -213,6 +220,13 @@ importers:
       '@ims-ui/utils':
         specifier: workspace:^
         version: link:../utils
+    devDependencies:
+      sortablejs:
+        specifier: ^1.15.0
+        version: 1.15.0
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
 
   packages/types: {}
 

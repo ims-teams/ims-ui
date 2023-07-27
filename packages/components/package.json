@@ -1,6 +1,6 @@
 {
   "name": "@ims-ui/components",
-  "version": "0.0.29",
+  "version": "0.0.37",
   "description": "",
   "main": "dist/ims-ui-components.umd.js",
   "module": "dist/ims-ui-components.mjs",
@@ -25,5 +25,9 @@
     "@ims-ui/hooks": "workspace:^",
     "@ims-ui/types": "workspace:^",
     "@ims-ui/utils": "workspace:^"
+  },
+  "devDependencies": {
+    "sortablejs": "^1.15.0",
+    "vue": "^3.3.4"
   }
 }

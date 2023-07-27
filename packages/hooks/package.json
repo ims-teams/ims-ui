@@ -1,6 +1,6 @@
 {
   "name": "@ims-ui/hooks",
-  "version": "0.0.29",
+  "version": "0.0.37",
   "description": "",
   "main": "./dist/ims-ui-hooks.umd.js",
   "module": "./dist/ims-ui-hooks.mjs",

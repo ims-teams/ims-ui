@@ -1,6 +1,6 @@
 {
   "name": "@ims-ui/utils",
-  "version": "0.0.29",
+  "version": "0.0.37",
   "description": "",
   "main": "./dist/ims-ui-utils.umd.js",
   "module": "./dist/ims-ui-utils.mjs",

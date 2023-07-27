@@ -49,14 +49,16 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
         name: "ims-ui",
       },
       minify: false,
-      // rollupOptions: {
-      //   external: ["vue", /ant-design-vue.*/, "sortablejs"],
-      //   output: {
-      //     globals: {
-      //       vue: "vue",
-      //     },
-      //   },
-      // },
+      rollupOptions: {
+        external: [/ant-design-vue.*/, "sortablejs"],
+        output: {
+          globals: {
+            "ant-design-vue": "antDesignVue",
+            "ant-design-vue/es": "antDesignVueEs",
+            sortablejs: "Sortable",
+          },
+        },
+      },
     },
     esbuild: {
       drop: VITE_DROP_CONSOLE ? ["console", "debugger"] : [],
@@ -68,6 +70,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     },
 
     resolve: {
+      dedupe: ["vue"],
       alias: [
         {
           find: /^ims-ui$/,

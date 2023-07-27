@@ -1,6 +1,6 @@
 {
   "name": "ims-ui",
-  "version": "0.0.29",
+  "version": "0.0.37",
   "description": "ims-ui",
   "main": "dist/ims-ui.umd.js",
   "module": "dist/ims-ui.mjs",
@@ -27,6 +27,11 @@
     "@ims-ui/hooks": "workspace:^",
     "@ims-ui/types": "workspace:^",
     "@ims-ui/utils": "workspace:^"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.4",
+    "ant-design-vue": "^4.0.0",
+    "sortablejs": "^1.15.0"
   },
   "keywords": [
     "ims-ui"

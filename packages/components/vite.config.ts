@@ -48,6 +48,9 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
         output: {
           globals: {
             vue: "vue",
+            "ant-design-vue": "antDesignVue",
+            "ant-design-vue/es": "antDesignVueEs",
+            sortablejs: "Sortable",
           },
         },
       },
@@ -67,6 +70,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
       },
     },
     resolve: {
+      dedupe: ["vue"],
       alias: [
         {
           find: /^ims-ui$/,
