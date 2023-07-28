@@ -1,4 +1,4 @@
-export interface JsonPrettyProps {
+export interface ImsJsonViewerProps {
   title?: string;
   height?: number;
 }

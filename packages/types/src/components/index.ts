@@ -1,5 +1,5 @@
 export * from "./button";
-export * from "./json-pretty";
+export * from "./json-viewer";
 export * from "./nav-menu";
 export * from "./cascader";
 export * from "./select";

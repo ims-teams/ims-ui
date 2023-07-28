@@ -5,7 +5,10 @@
         ><icon :icon="props.icon" :inline="true"
       /></span>
     </template>
-    <slot>{{ props.text }}</slot>
+
+    <template v-if="props.text">{{ props.text }}</template>
+
+    <slot v-else></slot>
   </a-button>
 </template>
 

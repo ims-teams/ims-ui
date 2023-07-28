@@ -17,7 +17,8 @@
       <div>{{ val }}</div>
     </div>
     <p>button - demo {{ msg }}</p>
-    <ImsButton :text="msg"></ImsButton>
+    <ImsButton>默认插槽内容</ImsButton>
+    <ImsButton :text="msg">123</ImsButton>
 
     <ImsPopconfirmButton text="aaa" :canConfirm="false"></ImsPopconfirmButton>
 

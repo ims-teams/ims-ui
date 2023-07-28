@@ -47,12 +47,15 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
       lib: {
         entry: "./index.ts",
         name: "ims-ui",
+        formats: ["es"],
       },
       minify: false,
       rollupOptions: {
-        external: [/ant-design-vue.*/, "sortablejs"],
+        external: ["vue", /ant-design-vue.*/, "sortablejs", "vue-json-pretty"],
         output: {
           globals: {
+            vue: "vue",
+            "vue-json-pretty": "VueJsonPretty",
             "ant-design-vue": "antDesignVue",
             "ant-design-vue/es": "antDesignVueEs",
             sortablejs: "Sortable",

@@ -1,6 +1,6 @@
 {
   "name": "@ims-ui/constants",
-  "version": "0.0.37",
+  "version": "0.0.48",
   "description": "",
   "main": "./dist/ims-ui-constants.umd.js",
   "module": "./dist/ims-ui-constants.mjs",

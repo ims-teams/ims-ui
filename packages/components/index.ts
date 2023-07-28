@@ -2,9 +2,9 @@ import "virtual:uno.css";
 
 export * from "./button";
 
-export * from "./json-pretty";
+export * from "./json-viewer";
 
-// export * from "./nav-menu";
+export * from "./nav-menu";
 
 export * from "./bread-crumb";
 
@@ -14,9 +14,9 @@ export * from "./select";
 
 export * from "./modal";
 
-// export * from "./form";
+export * from "./form";
 
-// export * from "./curd";
+export * from "./curd";
 
 export * from "./icon-picker";
 
