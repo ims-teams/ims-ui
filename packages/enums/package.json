@@ -1,6 +1,6 @@
 {
   "name": "@ims-ui/enums",
-  "version": "0.0.1",
+  "version": "0.0.50",
   "description": "",
   "main": "index.ts",
   "scripts": {

@@ -14,6 +14,7 @@ import imsuiPackage from "../../packages/ims-ui/package.json";
 
 const log = console.log;
 const packages = [
+  "enums",
   "constants",
   "hooks",
   "types",

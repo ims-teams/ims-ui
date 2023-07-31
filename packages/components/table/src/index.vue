@@ -39,14 +39,11 @@
     </a-space>
   </DefineCurd>
   <div :class="`${prefixCls}-wrapper`" ref="wrapperEl">
-    <!-- <im   -->
-
-    <!-- <ImsJsonPretty :height="400" :data="sortedKeys"></ImsJsonPretty> -->
-
     <a-table
       :class="prefixCls"
       v-bind="$attrs"
       ref="tableRef"
+      :data-source="lists || []"
       :components="tblComponents"
       bordered
       expandFixed="right"
@@ -115,12 +112,12 @@
 
           <template v-if="slotProps.column.key === 'operations'">
             <slot :name="name" v-bind="slotProps"></slot>
-            <ReuseCurd
+            <!-- <ReuseCurd
               :record="slotProps.record"
               :column="slotProps.column"
               :text="slotProps.text"
               :index="slotProps.index"
-            />
+            /> -->
           </template>
 
           <template v-else>

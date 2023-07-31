@@ -109,7 +109,7 @@
               v-if="filters.spans > 48"
             />
 
-            <a-dropdown placement="bottom" :trigger="['click']">
+            <a-dropdown placement="bottomLeft" :trigger="['click']">
               <icon
                 icon="tabler:settings-down"
                 :inline="true"
@@ -147,7 +147,7 @@
     </div>
     <!-- {{ slotsNames }} -->
     <div :class="`${prefixCls}-table`">
-      <!-- <ims-json-pretty :data="dataTable" editable showLine></ims-json-pretty> -->
+      <!-- <ims-json-viewer :data="lists" editable showLine></ims-json-viewer> -->
       <ims-table
         v-if="!initialing"
         v-bind="$attrs"
@@ -222,7 +222,7 @@
               <template v-else>
                 <!-- 合并(merge) -->
 
-                <a-space class="overlay" :size="0" :key="name">
+                <a-space class="merge" :size="0" :key="name">
                   <template #split>
                     <a-divider type="vertical" />
                   </template>
@@ -323,7 +323,7 @@ import { createReusableTemplate } from "@vueuse/core";
 
 import { storeToRefs } from "pinia";
 
-import { TableColumn } from "@ims-ui/types";
+import { ImsTableColumn } from "@ims-ui/types";
 
 import {
   CurdActionEmitEnum,
@@ -582,7 +582,7 @@ const [DefineOperations, ReuseOperations] = createReusableTemplate<{
     deletedAt?: any;
     updatedAt?: any;
   };
-  column: TableColumn[];
+  column: ImsTableColumn[];
   index?: number;
   text: any;
 }>();
@@ -681,6 +681,7 @@ defineExpose({
     }
 
     &-action-bar {
+      // border: 1px solid red;
       --at-apply: flex justify-between items-center;
     }
   }
