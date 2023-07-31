@@ -13,6 +13,11 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       external: ["vue"],
+      output: {
+        globals: {
+          vue: "vue",
+        },
+      },
     },
   },
   resolve: {
