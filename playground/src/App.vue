@@ -13,32 +13,90 @@
   <hr />
   <div>
     <div>
-      <ImsJsonPretty :data="datas"></ImsJsonPretty>
+      <!-- <ImsJsonViewer :data="datas"></ImsJsonViewer> -->
       <div>{{ val }}</div>
     </div>
-    <p>button - demo {{ msg }}</p>
-    <ImsButton>默认插槽内容</ImsButton>
+    <p>button - demo {{ msg }} {{ testParms }}</p>
+
+    <ims-select
+      :api="getNodes"
+      :params="testParms"
+      class="mb-2"
+      :fieldNames="fieldNames"
+    ></ims-select>
+    <ImsButton @click="changeTest">默认插槽内容</ImsButton>
     <ImsButton :text="msg">123</ImsButton>
 
     <ImsPopconfirmButton text="aaa" :canConfirm="false"></ImsPopconfirmButton>
-
-    <ImsCascader v-model:value="val" :options="datas"></ImsCascader>
+    <!-- :optionsApi="getNodes({ is_show_tree: '1' })" -->
+    <ImsCascader v-model:value="val" :fieldNames="fieldNames"></ImsCascader>
 
     <p @click="changeText">修改1122</p>
     <p class="border-2 border-solid border-light-200">input demo xxx</p>
 
-    <ims-table :dataSource="dataSource" :columns="columns"></ims-table>
+    <!-- <ims-table :dataSource="dataSource" :columns="columns" sortable></ims-table> -->
   </div>
 </template>
 
 <script setup lang="ts">
-import { ImsJsonPretty } from "ims-ui";
-
 import { ref } from "vue";
-
+import { getNodes } from "@ims-ui/apis";
 const msg = ref("abc");
 
 const val = ref(["zhejiang", "hangzhou", "xihu"]);
+
+const fieldNames = { label: "name", value: "id" };
+
+const testParms = ref<any>({
+  a: "bbc",
+});
+
+const api = ref(getNodes(testParms));
+
+const changeTest = () => {
+  testParms.value = {
+    a: "1234",
+    status: 1,
+    pageSize: Math.floor(Math.random() * 10),
+    b: Math.random() + "a",
+  };
+  // api.value = getNodes(testParms.value);
+  // console.info("api.value =>", api);
+  // let res = getNodes(testParms.value);
+  // console.info("res =>", res);
+  console.info("change test");
+};
+
+const testOptions = [
+  {
+    id: 592,
+    pid: 0,
+    name: "系统",
+    inferiors_count: 3,
+    route: null,
+  },
+  {
+    id: 564,
+    pid: 563,
+    name: "增加",
+    inferiors_count: 0,
+    route: null,
+  },
+  {
+    id: 606,
+    pid: 0,
+    name: "运维",
+    inferiors_count: 2,
+    route: null,
+  },
+  {
+    id: 126,
+    pid: 0,
+    name: "控制台",
+    inferiors_count: 2,
+    route: null,
+  },
+];
 
 const dataSource = [
   {

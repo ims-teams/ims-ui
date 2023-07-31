@@ -5,7 +5,7 @@ import type { UserConfig, ConfigEnv, PluginOption } from "vite";
 
 import getLessOptions from "../build/vite/preprocessor/less";
 import { configVitePlugins } from "../build/vite";
-// import { createProxy } from '../build/vite/proxy';
+import { createProxy } from "../build/vite/proxy";
 
 import { wrapperEnv } from "../build/utils";
 
@@ -41,7 +41,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
       port: VITE_PORT,
       https: VITE_USE_SERVER_HTTPS,
       host: true,
-      // proxy: createProxy(VITE_PROXY),
+      proxy: createProxy(VITE_PROXY),
     },
     esbuild: {
       drop: VITE_DROP_CONSOLE ? ["console", "debugger"] : [],

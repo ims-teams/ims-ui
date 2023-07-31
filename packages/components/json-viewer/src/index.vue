@@ -1,7 +1,6 @@
 <template>
   <div :class="prefixCls" :style="`max-height: ${height}px;`">
     <a-typography-text strong>{{ title }}</a-typography-text>
-    <div>ims json viewer</div>
     <vue-json-pretty v-bind="$attrs" />
   </div>
 </template>

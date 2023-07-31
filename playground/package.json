@@ -7,7 +7,8 @@
     "dev": "vite"
   },
   "dependencies": {
-    "ims-ui": "workspace:^"
+    "ims-ui": "workspace:^",
+    "@ims-ui/apis": "workspace:^"
   },
   "keywords": [],
   "author": "Van Chin",

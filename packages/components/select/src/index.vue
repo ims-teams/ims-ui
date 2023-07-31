@@ -3,13 +3,13 @@
     :class="prefixCls"
     v-bind="$attrs"
     :options="optionsData"
+    :loading="loading"
   ></a-select>
 </template>
 <script lang="ts" setup>
 import { useStyle } from "@ims-ui/hooks";
 import { ImsSelectProps } from "@ims-ui/types";
-
-// import { useRequest } from 'alova';
+import type { Method } from "alova";
 
 const { prefixCls } = useStyle("select");
 
@@ -18,43 +18,54 @@ defineOptions({
   name: COMPONENT_NAME,
 });
 
-const props = defineProps<ImsSelectProps>();
+const loading = ref(false);
 
-const { optionsApi, options } = props;
-
-console.info("props =>", optionsApi);
+const { api, options, params } = defineProps<ImsSelectProps>();
 
 const optionsData = ref<ImsSelectProps["options"]>([]);
-// const apiRes = ref();
-// if (optionsApi) {
-//   apiRes.value = useRequest(optionsApi, {
-//     immediate: false
-//   });
-// }
+
 const getOptions = async () => {
   if (options) {
     optionsData.value = options;
     return;
   }
-  if (optionsApi) {
-    // apiRes.value.send();
-    const res = await optionsApi?.send();
+  if (api) {
+    loading.value = true;
+    const res = await (api(params) as Method).send(true);
+    loading.value = false;
     optionsData.value = res || [];
   }
 };
 
-getOptions();
+(async () => {
+  getOptions();
+})();
 
-// let res = optionsApi() as Method;
+watch(
+  () => params,
+  () => {
+    getOptions();
+  },
+  {
+    deep: true,
+  }
+);
 
-// const msg = ref('abc');
+watch(
+  () => options,
+  () => {
+    getOptions();
+  },
+  {
+    deep: true,
+  }
+);
 </script>
 
 <style lang="less" scoped>
 @prefix-cls: ~"@{namespace}-select";
 
 .@{prefix-cls} {
-  // border: 1px solid red;
   --at-apply: min-w-100px w-full;
 }
 </style>
