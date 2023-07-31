@@ -19,9 +19,7 @@ defineOptions({
 });
 
 const loading = ref(false);
-
 const { api, options, params } = defineProps<ImsCascaderProps>();
-
 const optionsData = ref<ImsCascaderProps["options"]>([]);
 
 const getOptions = async () => {

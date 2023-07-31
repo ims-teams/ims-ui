@@ -13,7 +13,7 @@
   <hr />
   <div>
     <div>
-      <!-- <ImsJsonViewer :data="datas"></ImsJsonViewer> -->
+      <ImsJsonViewer :data="datas"></ImsJsonViewer>
       <div>{{ val }}</div>
     </div>
     <p>button - demo {{ msg }} {{ testParms }}</p>
@@ -24,10 +24,14 @@
       class="mb-2"
       :fieldNames="fieldNames"
     ></ims-select>
-    <ImsButton @click="changeTest">默认插槽内容</ImsButton>
-    <ImsButton :text="msg">123</ImsButton>
+    <a-space class="mb-2">
+      <ImsButton @click="changeTest">默认插槽内容</ImsButton>
 
-    <ImsPopconfirmButton text="aaa" :canConfirm="false"></ImsPopconfirmButton>
+      <ImsButton :text="msg">123</ImsButton>
+
+      <ImsPopconfirmButton text="aaa" :canConfirm="false"></ImsPopconfirmButton>
+    </a-space>
+
     <!-- :optionsApi="getNodes({ is_show_tree: '1' })" -->
     <ImsCascader
       v-model:value="val"
@@ -39,7 +43,7 @@
     <p @click="changeText">修改1122</p>
     <p class="border-2 border-solid border-light-200">input demo xxx</p>
 
-    <!-- <ims-table :dataSource="dataSource" :columns="columns" sortable></ims-table> -->
+    <ims-table :dataSource="dataSource" :columns="columns" sortable></ims-table>
   </div>
 </template>
 
