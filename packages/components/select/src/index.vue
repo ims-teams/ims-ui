@@ -10,7 +10,7 @@
 import { useStyle } from "@ims-ui/hooks";
 import { ImsSelectProps } from "@ims-ui/types";
 import type { Method } from "alova";
-
+// cascader
 const { prefixCls } = useStyle("select");
 
 const COMPONENT_NAME = "ImsSelect";
@@ -31,7 +31,10 @@ const getOptions = async () => {
   }
   if (api) {
     loading.value = true;
-    const res = await (api(params) as Method).send(true);
+    const apiMethod = api(params) as Method;
+    apiMethod.setName("api-select");
+    const res = await apiMethod.send(true);
+
     loading.value = false;
     optionsData.value = res || [];
   }

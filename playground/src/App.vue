@@ -29,7 +29,12 @@
 
     <ImsPopconfirmButton text="aaa" :canConfirm="false"></ImsPopconfirmButton>
     <!-- :optionsApi="getNodes({ is_show_tree: '1' })" -->
-    <ImsCascader v-model:value="val" :fieldNames="fieldNames"></ImsCascader>
+    <ImsCascader
+      v-model:value="val"
+      :fieldNames="fieldNames"
+      :params="cascaderParms"
+      :api="getNodes"
+    ></ImsCascader>
 
     <p @click="changeText">修改1122</p>
     <p class="border-2 border-solid border-light-200">input demo xxx</p>
@@ -49,9 +54,13 @@ const fieldNames = { label: "name", value: "id" };
 
 const testParms = ref<any>({
   a: "bbc",
+  is_show_tree: 1,
 });
 
-const api = ref(getNodes(testParms));
+const cascaderParms = ref<any>({
+  a: "bbc",
+  is_show_tree: 1,
+});
 
 const changeTest = () => {
   testParms.value = {
@@ -59,6 +68,12 @@ const changeTest = () => {
     status: 1,
     pageSize: Math.floor(Math.random() * 10),
     b: Math.random() + "a",
+  };
+
+  cascaderParms.value = {
+    status: 1,
+    pageSize: Math.floor(Math.random() * 10),
+    is_show_tree: 1,
   };
   // api.value = getNodes(testParms.value);
   // console.info("api.value =>", api);

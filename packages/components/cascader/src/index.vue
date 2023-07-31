@@ -3,14 +3,14 @@
     :class="prefixCls"
     v-bind="$attrs"
     :options="optionsData"
+    :loading="loading"
   ></a-cascader>
 </template>
 <script lang="ts" setup>
 import { useStyle } from "@ims-ui/hooks";
-import { CascaderProps } from "@ims-ui/types";
-
-// import { useRequest } from 'alova';
-
+import { ImsCascaderProps } from "@ims-ui/types";
+import type { Method } from "alova";
+//
 const { prefixCls } = useStyle("cascader");
 
 const COMPONENT_NAME = "ImsCascader";
@@ -18,43 +18,56 @@ defineOptions({
   name: COMPONENT_NAME,
 });
 
-const props = defineProps<CascaderProps>();
+const loading = ref(false);
 
-const { optionsApi, options } = props;
+const { api, options, params } = defineProps<ImsCascaderProps>();
 
-console.info("props =>", optionsApi);
+const optionsData = ref<ImsCascaderProps["options"]>([]);
 
-const optionsData = ref<CascaderProps["options"]>([]);
-// const apiRes = ref();
-// if (optionsApi) {
-//   apiRes.value = useRequest(optionsApi, {
-//     immediate: false
-//   });
-// }
 const getOptions = async () => {
   if (options) {
     optionsData.value = options;
     return;
   }
-  if (optionsApi) {
-    // apiRes.value.send();
-    const res = await optionsApi?.send();
+  if (api) {
+    loading.value = true;
+    const apiMethod = api(params) as Method;
+    apiMethod.setName("api-cascader");
+    const res = await apiMethod.send(true);
+    loading.value = false;
     optionsData.value = res || [];
   }
 };
 
-getOptions();
+(async () => {
+  getOptions();
+})();
 
-// let res = optionsApi() as Method;
+watch(
+  () => params,
+  () => {
+    getOptions();
+  },
+  {
+    deep: true,
+  }
+);
 
-// const msg = ref('abc');
+watch(
+  () => options,
+  () => {
+    getOptions();
+  },
+  {
+    deep: true,
+  }
+);
 </script>
 
 <style lang="less" scoped>
 @prefix-cls: ~"@{namespace}-cascader";
 
 .@{prefix-cls} {
-  // border: 1px solid red;
-  --at-apply: min-w-400px;
+  --at-apply: min-w-400px w-full;
 }
 </style>
