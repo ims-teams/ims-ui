@@ -24,14 +24,15 @@
   "dependencies": {
     "@ims-ui/components": "workspace:^",
     "@ims-ui/constants": "workspace:^",
+    "@ims-ui/enums": "workspace:^",
     "@ims-ui/hooks": "workspace:^",
     "@ims-ui/types": "workspace:^",
     "@ims-ui/utils": "workspace:^"
   },
   "peerDependencies": {
-    "vue": "^3.3.4",
     "ant-design-vue": "^4.0.0",
-    "sortablejs": "^1.15.0"
+    "sortablejs": "^1.15.0",
+    "vue": "^3.3.4"
   },
   "keywords": [
     "ims-ui"

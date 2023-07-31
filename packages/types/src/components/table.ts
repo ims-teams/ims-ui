@@ -1,10 +1,10 @@
-import type { TableColumnType } from 'ant-design-vue';
+import type { TableColumnType } from "ant-design-vue";
 
 import {
   TableColumnTypeEnum,
   TableColumnCombinationModeEnum,
-  ColumnFormatTypeEnum
-} from './enums/tableEnum';
+  ColumnFormatTypeEnum,
+} from "@ims-ui/enums";
 
 export interface ImsTableProps {
   /**
@@ -55,7 +55,7 @@ export interface DragEndParams {
   sortabledDataSource: object[];
 }
 
-export interface TableColumn extends TableColumnType {
+export interface ImsTableColumn extends TableColumnType {
   /**
    * 数列ID
    */
@@ -136,5 +136,5 @@ export interface DataTable {
   /**
    * 数据表格 所有可用的数列
    */
-  columns: TableColumn[];
+  columns: ImsTableColumn[];
 }

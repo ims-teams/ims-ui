@@ -86,37 +86,6 @@ const changeTest = () => {
   console.info("change test");
 };
 
-const testOptions = [
-  {
-    id: 592,
-    pid: 0,
-    name: "系统",
-    inferiors_count: 3,
-    route: null,
-  },
-  {
-    id: 564,
-    pid: 563,
-    name: "增加",
-    inferiors_count: 0,
-    route: null,
-  },
-  {
-    id: 606,
-    pid: 0,
-    name: "运维",
-    inferiors_count: 2,
-    route: null,
-  },
-  {
-    id: 126,
-    pid: 0,
-    name: "控制台",
-    inferiors_count: 2,
-    route: null,
-  },
-];
-
 const dataSource = [
   {
     key: "1",

@@ -242,7 +242,7 @@ import {
 
 import { ref, h, useAttrs, unref } from "vue";
 
-import { ImsTableProps, DragEndParams } from "@ims-ui/types";
+import { ImsTableProps, DragEndParams, ImsTableColumn } from "@ims-ui/types";
 
 import ImsTableSortable from "./sortable.vue";
 

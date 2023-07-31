@@ -323,13 +323,13 @@ import { createReusableTemplate } from "@vueuse/core";
 
 import { storeToRefs } from "pinia";
 
-import { TableColumn } from "../../table";
+import { TableColumn } from "@ims-ui/types";
 
 import {
   CurdActionEmitEnum,
   CurdActionPositionEnum,
   TableColumnCombinationModeEnum,
-} from "./enums/curdEnum";
+} from "@ims-ui/enums";
 import { Table } from "ant-design-vue";
 
 import { CurdProps } from "@ims-ui/types";

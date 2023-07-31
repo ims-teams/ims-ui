@@ -1,14 +1,16 @@
 import type {
   PiniaGetterTree,
   PiniaStateTree,
-  PiniaActionTree
-} from '../../types/pinia';
-import type { Store, StoreDefinition } from 'pinia';
-import type { PaginationProps } from 'ant-design-vue';
-import type { TableColumn, DataTable } from '../../table';
+  PiniaActionTree,
+} from "../shims/pinia";
+
+import type { Store, StoreDefinition } from "pinia";
+import type { PaginationProps } from "ant-design-vue";
+import type { ImsTableColumn, DataTable } from "./table";
+import type { IFormItem } from "./form";
 
 export interface CurdAction {
-  position: 'fl' | 'fr' | 'ro';
+  position: "fl" | "fr" | "ro";
   component: string;
   props: object;
   emit: string;
@@ -89,7 +91,7 @@ export interface CurdState extends PiniaStateTree {
    * 表格组件 表格列的配置描述
    * @access https://www.antdv.com/components/table-cn/#API
    */
-  columns: TableColumn[];
+  columns: ImsTableColumn[];
   /**
    * 数据表格
    */
@@ -155,10 +157,10 @@ export interface CurdActions extends PiniaActionTree {
   }): void;
 }
 
-export type CurdStore = Store<'curd', CurdState, CurdGetters, CurdActions>;
+export type CurdStore = Store<"curd", CurdState, CurdGetters, CurdActions>;
 
 export type CurdStoreDefinition = StoreDefinition<
-  'curd',
+  "curd",
   CurdState,
   CurdGetters,
   CurdActions

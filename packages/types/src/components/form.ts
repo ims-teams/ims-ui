@@ -1,6 +1,6 @@
 import type { FormItemProps } from "ant-design-vue";
 
-interface IFormItem {
+export interface IFormItem {
   // component:Object;
   field: string;
   rule: string;

@@ -203,6 +203,8 @@ importers:
 
   packages/constants: {}
 
+  packages/enums: {}
+
   packages/hooks: {}
 
   packages/ims-ui:
@@ -213,6 +215,9 @@ importers:
       '@ims-ui/constants':
         specifier: workspace:^
         version: link:../constants
+      '@ims-ui/enums':
+        specifier: workspace:^
+        version: link:../enums
       '@ims-ui/hooks':
         specifier: workspace:^
         version: link:../hooks
@@ -232,7 +237,11 @@ importers:
         specifier: ^3.3.4
         version: 3.3.4
 
-  packages/types: {}
+  packages/types:
+    dependencies:
+      '@ims-ui/enums':
+        specifier: workspace:^
+        version: link:../enums
 
   packages/utils:
     dependencies:

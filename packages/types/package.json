@@ -17,5 +17,8 @@
   },
   "keywords": [],
   "author": "Van Chin",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@ims-ui/enums": "workspace:^"
+  }
 }
