@@ -3,7 +3,7 @@ export interface NavMenuProps {
   fieldNames: {
     children: string;
     label: string;
-    value: string;
+    value: string | number;
     icon: string;
     leaf: string;
     disabled: string;
@@ -16,11 +16,12 @@ export interface NavMenuProps {
 }
 
 export interface NavMenuItemProps {
+  id?: string | number;
   /** 自定义参数 */
   fieldNames: {
     children: string;
     label: string;
-    value: string;
+    value: string | number;
     icon: string;
     leaf: string;
     disabled: string;

@@ -3,7 +3,7 @@
     <nav-menu-item
       v-for="(item, index) in data"
       :data="item"
-      :props="fieldNames"
+      :fieldNames="fieldNames"
       :key="item[fieldNames.value]"
       :bread-crumb="breadCrumb"
       :currentIndex="breadCrumb ? index : undefined"
@@ -23,29 +23,25 @@ defineOptions({
 });
 
 // fi
-const props = withDefaults(defineProps<NavMenuProps>(), {
-  fieldNames: () => {
-    return {
-      children: "children",
-      label: "label",
-      value: "value",
-      icon: "icon",
-      leaf: "leaf",
-      disabled: "disabled",
-      level: "level",
-    };
+const {
+  fieldNames = {
+    children: "children",
+    label: "label",
+    value: "value",
+    icon: "icon",
+    leaf: "leaf",
+    disabled: "disabled",
+    level: "level",
   },
-  breadCrumb: false,
-  data: () => [],
-});
-
-const { fieldNames, breadCrumb, data } = props;
+  breadCrumb,
+  data = [],
+} = defineProps<NavMenuProps>();
 </script>
 
 <style lang="less" scoped>
 @prefix-cls: ~"@{namespace}-nav-menu";
 
 .@{prefix-cls} {
-  border: 1px solid red;
+  // border: 1px solid red;
 }
 </style>

@@ -79,10 +79,13 @@ async function publishPackage(pkgName: string, version: string) {
 
   try {
     // npm publish --registry http://localhost:4873/
-    execSync("pnpm publish --registry http://localhost:4873/ --no-git-checks", {
-      cwd: pkgRoot,
-      stdio: "inherit",
-    });
+    execSync(
+      "pnpm publish --registry http://localhost:4873/ --no-git-checks --access public",
+      {
+        cwd: pkgRoot,
+        stdio: "inherit",
+      }
+    );
 
     log(chalk.green(`Successfully published ${pkgName}@${version}`));
   } catch (e: any) {

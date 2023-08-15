@@ -1,6 +1,6 @@
 {
   "name": "@ims-ui/components",
-  "version": "0.0.50",
+  "version": "0.0.1",
   "description": "",
   "main": "dist/ims-ui-components.umd.js",
   "module": "dist/ims-ui-components.mjs",

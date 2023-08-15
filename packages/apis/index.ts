@@ -14,3 +14,16 @@ export const getNodes = (params?: object) => {
     params,
   });
 };
+
+// export const nodeListsApi = (
+//   params = {},
+//   mode: ErrorMessageMode = 'message'
+// ) => {
+//   return defHttp.get(
+//     { url: nodeUri, params },
+//     {
+//       errorMessageMode: mode,
+//       isTransformResponse: false
+//     }
+//   );
+// };

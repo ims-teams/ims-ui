@@ -1,5 +1,7 @@
 import type { VNodeChild, PropType as VuePropType, Ref } from "vue";
 
+import type { NrlType } from "./shims/networks";
+
 declare global {
   // define global
 
@@ -92,5 +94,34 @@ declare global {
     VITE_BUILD_COMPRESS: "gzip" | "brotli" | "none";
     VITE_BUILD_COMPRESS_DELETE_ORIGIN_FILE: boolean;
     VITE_USE_IMAGEMIN: boolean;
+  }
+
+  // type NRL = ['AXIOS', 'ALOVA'] as const;
+
+  interface GlobConfig {
+    // Site title
+    title: string;
+    // Service interface url
+    apiUrl: string;
+    // Upload url
+    uploadUrl?: string;
+    //  Service interface url prefix
+    urlPrefix?: string;
+    // Project abbreviation
+    shortName: string;
+  }
+  interface GlobEnvConfig {
+    // VITE_NRL 网络请求库
+    VITE_NRL: NrlType;
+    // Site title
+    VITE_GLOB_APP_TITLE: string;
+    // Service interface url
+    VITE_GLOB_API_URL: string;
+    // Service interface url prefix
+    VITE_GLOB_API_URL_PREFIX?: string;
+    // Project abbreviation
+    VITE_GLOB_APP_SHORT_NAME: string;
+    // Upload url
+    VITE_GLOB_UPLOAD_URL?: string;
   }
 }

@@ -38,35 +38,119 @@
       />
     </a-space>
   </DefineCurd>
-  <div :class="`${prefixCls}-wrapper`" ref="wrapperEl">
-    <a-table
-      :class="prefixCls"
-      v-bind="$attrs"
-      ref="tableRef"
-      :data-source="lists || []"
-      :components="tblComponents"
-      bordered
-      expandFixed="right"
-      :columns="states.currentColumns"
-      :pagination="false"
-      :scroll="tableScroll"
-      @resizeColumn="onResizeColumn"
-    >
-      <!-- 透传 slot  /** 开始 */  -->
-      <template v-for="(_, name) in $slots" v-slot:[name]="slotProps">
-        <template v-if="name === 'headerCell'">
-          <slot :name="name" v-bind="slotProps"></slot>
+  <div :class="`${prefixCls}-wrapper flex flex-col bg-white  w-full`">
+    <!-- <ims-json-viewer :data="lists"></ims-json-viewer> -->
+    <div class="flex-1 w-full" ref="wrapperEl">
+      <a-table
+        :class="prefixCls"
+        v-bind="$attrs"
+        ref="tableRef"
+        :data-source="lists || []"
+        :components="tblComponents"
+        bordered
+        expandFixed="right"
+        :columns="states.currentColumns"
+        :pagination="false"
+        :scroll="tableScroll"
+        @resizeColumn="onResizeColumn"
+      >
+        <!-- 透传 slot  /** 开始 */  -->
+        <template v-for="(_, name) in $slots" v-slot:[name]="slotProps">
+          <template v-if="name === 'headerCell'">
+            <slot :name="name" v-bind="slotProps"></slot>
 
-          <template v-if="slotProps.column.key === 'operations'">
-            <div class="flex justify-between items-center">
-              <span>{{ title }}</span>
-              <a-space>
-                <a-dropdown placement="bottom" :trigger="['click']">
-                  <!-- <icon
+            <template v-if="slotProps.column.key === 'operations'">
+              <div class="flex justify-between items-center">
+                <span>{{ title }}</span>
+
+                <a-space>
+                  <a-dropdown placement="bottom" :trigger="['click']">
+                    <!-- <icon
                     icon="ant-design:column-height-outlined"
                     :inline="true"
                   /> -->
 
+                    <template #overlay>
+                      <a-menu
+                        @click="onTableSizeChange"
+                        v-model:selectedKeys="state.tableSize"
+                      >
+                        <a-menu-item key="large"> 默认 </a-menu-item>
+                        <a-menu-item key="middle"> 中等 </a-menu-item>
+                        <a-menu-item key="small"> 紧凑 </a-menu-item>
+                      </a-menu>
+                    </template>
+                  </a-dropdown>
+
+                  <icon
+                    v-if="schemes?.length >= 1"
+                    @click="openColumnsSet"
+                    icon="ant-design:setting-outlined"
+                    :inline="true"
+                    class="cursor-pointer"
+                  >
+                  </icon>
+                </a-space>
+              </div>
+            </template>
+          </template>
+
+          <template v-else-if="name === 'bodyCell'">
+            <template v-if="slotProps.column.formatType === 'INDEX'">
+              {{
+                (paginations?.current - 1) * paginations?.pageSize +
+                slotProps.index +
+                1
+              }}
+            </template>
+            <template v-if="slotProps.column.formatType === 2">
+              {{
+                slotProps.text
+                  ? unref(
+                      useDateFormat(slotProps.text, slotProps.column.formater)
+                    )
+                  : "-"
+              }}
+            </template>
+
+            <template v-if="slotProps.column.key === 'operations'">
+              <slot :name="name" v-bind="slotProps"></slot>
+              <!-- <ReuseCurd
+              :record="slotProps.record"
+              :column="slotProps.column"
+              :text="slotProps.text"
+              :index="slotProps.index"
+            /> -->
+            </template>
+
+            <template v-else>
+              <slot :name="name" v-bind="slotProps"></slot>
+            </template>
+          </template>
+
+          <template v-else>
+            <slot :name="name" v-bind="slotProps || {}"></slot>
+          </template>
+        </template>
+
+        <!-- 透传 slot  /** 结束 */  -->
+
+        <!-- 内置默认的（会被透出solt重写覆盖） slot   /** 开始 */  -->
+        <template
+          #headerCell="{ title, column }"
+          v-if="!slotsNames.includes('headerCell')"
+        >
+          <template v-if="column.key === 'operations'">
+            <div class="flex justify-between items-center">
+              <span>{{ title }}</span>
+              <a-space>
+                <a-dropdown placement="bottom" :trigger="['click']">
+                  <icon
+                    icon="ant-design:column-height-outlined"
+                    :inline="true"
+                  />
+
+                  // large middle small @select="onTableSizeChange"
                   <template #overlay>
                     <a-menu
                       @click="onTableSizeChange"
@@ -92,131 +176,57 @@
           </template>
         </template>
 
-        <template v-else-if="name === 'bodyCell'">
-          <template v-if="slotProps.column.formatType === 'INDEX'">
-            {{
-              (paginations?.current - 1) * paginations?.pageSize +
-              slotProps.index +
-              1
-            }}
+        <template
+          v-if="!slotsNames.includes('bodyCell')"
+          #bodyCell="{ text, record, index, column }"
+        >
+          <!-- date/datetime 格式化  -->
+          <template v-if="column.formatType === 2">
+            {{ text ? unref(useDateFormat(text, column.formater)) : "-" }}
           </template>
-          <template v-if="slotProps.column.formatType === 2">
-            {{
-              slotProps.text
-                ? unref(
-                    useDateFormat(slotProps.text, slotProps.column.formater)
-                  )
-                : "-"
-            }}
-          </template>
+          <template v-if="column.key === 'operations'">
+            <!-- <div>内置</div> -->
 
-          <template v-if="slotProps.column.key === 'operations'">
-            <slot :name="name" v-bind="slotProps"></slot>
-            <!-- <ReuseCurd
-              :record="slotProps.record"
-              :column="slotProps.column"
-              :text="slotProps.text"
-              :index="slotProps.index"
-            /> -->
-          </template>
-
-          <template v-else>
-            <slot :name="name" v-bind="slotProps"></slot>
+            <ReuseCurd
+              :record="record"
+              :column="column"
+              :text="text"
+              :index="index"
+            />
           </template>
         </template>
 
-        <template v-else>
-          <slot :name="name" v-bind="slotProps || {}"></slot>
-        </template>
-      </template>
-
-      <!-- 透传 slot  /** 结束 */  -->
-
-      <!-- 内置默认的（会被透出solt重写覆盖） slot   /** 开始 */  -->
-      <template
-        #headerCell="{ title, column }"
-        v-if="!slotsNames.includes('headerCell')"
-      >
-        <template v-if="column.key === 'operations'">
-          <div class="flex justify-between items-center">
-            <span>{{ title }}</span>
-            <a-space>
-              <a-dropdown placement="bottom" :trigger="['click']">
-                <icon icon="ant-design:column-height-outlined" :inline="true" />
-
-                // large middle small @select="onTableSizeChange"
-                <template #overlay>
-                  <a-menu
-                    @click="onTableSizeChange"
-                    v-model:selectedKeys="state.tableSize"
-                  >
-                    <a-menu-item key="large"> 默认 </a-menu-item>
-                    <a-menu-item key="middle"> 中等 </a-menu-item>
-                    <a-menu-item key="small"> 紧凑 </a-menu-item>
-                  </a-menu>
-                </template>
-              </a-dropdown>
-
-              <icon
-                v-if="schemes?.length >= 1"
-                @click="openColumnsSet"
-                icon="ant-design:setting-outlined"
-                :inline="true"
-                class="cursor-pointer"
-              >
-              </icon>
-            </a-space>
-          </div>
-        </template>
-      </template>
-
-      <template
-        v-if="!slotsNames.includes('bodyCell')"
-        #bodyCell="{ text, record, index, column }"
-      >
-        <!-- date/datetime 格式化  -->
-        <template v-if="column.formatType === 2">
-          {{ text ? unref(useDateFormat(text, column.formater)) : "-" }}
-        </template>
-        <template v-if="column.key === 'operations'">
-          <!-- <div>内置</div> -->
-
-          <ReuseCurd
-            :record="record"
-            :column="column"
-            :text="text"
-            :index="index"
-          />
-        </template>
-      </template>
-
-      <!-- 内置 slot  /** 结束 */  -->
-    </a-table>
-    <a-drawer
-      v-if="schemes?.length >= 1"
-      title="数列方案配置"
-      placement="right"
-      width="90%"
-      size="large"
-      :bodyStyle="bodyStyle"
-      :headerStyle="{ padding: '16px !important' }"
-      v-model:open="columnsSetting"
-      :get-container="false"
-      :style="{ position: 'absolute' }"
-    >
-      <ImsSchemeSetting
+        <!-- 内置 slot  /** 结束 */  -->
+      </a-table>
+      <a-drawer
         v-if="schemes?.length >= 1"
-        :data-table="dataTable"
-      ></ImsSchemeSetting>
-    </a-drawer>
+        title="数列方案配置"
+        placement="right"
+        width="90%"
+        size="large"
+        :bodyStyle="bodyStyle"
+        :headerStyle="{ padding: '16px !important' }"
+        v-model:open="columnsSetting"
+        :get-container="false"
+        :style="{ position: 'absolute' }"
+      >
+        <ImsSchemeSetting
+          v-if="schemes?.length >= 1"
+          :data-table="dataTable"
+        ></ImsSchemeSetting>
+      </a-drawer>
+    </div>
 
-    <div :class="`${prefixCls}-footer-bar`" v-if="props.footerBar">
+    <div
+      :class="`${prefixCls}-footer-bar flex justify-between items-center bg-white px-2 h-50px `"
+      v-if="footerBar"
+    >
       <div>
         <slot name="footer-action"></slot>
       </div>
 
       <a-pagination
-        v-bind="props.paginations"
+        v-bind="paginations"
         @change="onPaginationChange"
         :show-total="(total: number) => `总共 ${total} 条`"
         show-size-changer
@@ -228,7 +238,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Table as ATable } from "ant-design-vue";
+import { Table as ATable, Pagination as APagination } from "ant-design-vue";
 import { Icon } from "@iconify/vue";
 import { useStyle } from "@ims-ui/hooks";
 import {
@@ -259,13 +269,15 @@ defineOptions({
   name: COMPONENT_NAME,
 });
 
-const props = withDefaults(defineProps<ImsTableProps>(), {
-  sortable: false,
-  animation: 600,
-  dragHandler: undefined,
-  uri: () => false,
-  schemes: () => [],
-});
+const {
+  sortable = false,
+  animation = 600,
+  uri = false,
+  schemes = [],
+  footerBar = true,
+  paginations,
+  columns,
+} = defineProps<ImsTableProps>();
 
 // 重用模板
 const { define: DefineCurd, reuse: ReuseCurd } = createReusableTemplate();
@@ -304,24 +316,27 @@ console.info("wrapperHeight =>", wrapperHeight);
 
 const tableScroll = ref({
   x: "max-content",
-  // y: wrapperHeight.value - 56
+  // y: 300,
+  // y: wrapperHeight.value - 56,
 });
 
 useResizeObserver(wrapperEl, (entries) => {
   const entry = entries[0];
 
-  const { width, height } = entry.contentRect;
+  const { height } = entry.contentRect;
   // tableScroll.value.x = width;
-  if (height - 60 > 180) {
-    tableScroll.value.y = height - 60;
-  } else {
-    tableScroll.value.y = 180;
-  }
+  // if (height - 60 > 180) {
+  //   tableScroll.value.y = height - 110;
+  // } else {
+  //   tableScroll.value.y = 180 - 60;
+  // }
 
-  console.info("tableScroll =>", tableScroll.value);
+  tableScroll.value.y = height - 60;
+
+  // console.info("tableScroll =>", tableScroll.value);
 });
 
-const internalProcess = props.uri !== false;
+const internalProcess = uri !== false;
 // console.info("ims-table:internalProcess =>", internalProcess);
 // large middle small
 let tableSize = ref(["large"]);
@@ -333,8 +348,6 @@ const state = reactive({
 const schemeActiveKey = ref(0);
 
 const customRow = ref();
-
-console.info("aa =>", props.schemes[schemeActiveKey.value]);
 
 const activeSchemeColumns = ref<any[]>([]);
 
@@ -352,14 +365,14 @@ const scTableRowSelection: TableProps["rowSelection"] = {
   // })
 };
 
-if (props.schemes.length >= 1) {
-  // customRow.value = useDraggable<any>(props.schemes[0].columns);
+if (schemes.length >= 1) {
+  // customRow.value = useDraggable<any>(schemes[0].columns);
 }
 
 const onSchemeChange = (activeKey: string | number) => {
   // console.info('schemeChange =>', activeKey);
   // console.info('schemeActiveKey =>', schemeActiveKey.value);
-  // customRow.value = useDraggable<any>(props.schemes[activeKey].columns);
+  // customRow.value = useDraggable<any>(schemes[activeKey].columns);
 };
 
 const onSchemeTabClick = () => {
@@ -398,14 +411,11 @@ const attrs = useAttrs();
 
 console.info("attrs =>", attrs);
 
-console.info("props =>", props);
+states.value.currentColumns = columns;
 
-states.value.currentColumns = props.columns;
-
-// console.info('props.columns =>', props.columns);
 // 判单 columns 是否包含 operations 列
-if (props.columns) {
-  const operationsKeyIndex = props.columns.findIndex(
+if (columns) {
+  const operationsKeyIndex = columns.findIndex(
     (column) => column.key === "operations"
   );
 }
@@ -533,13 +543,13 @@ sortedKeys.value = map(attrs.dataSource, attrs.rowKey);
 console.info("sortedKeys.value =>", sortedKeys.value);
 const tblComponents = ref({});
 
-if (props.sortable) {
+if (sortable) {
   tblComponents.value = {
     body: {
       wrapper: h(ImsTableSortable, {
         rowKey: attrs.rowKey,
-        animation: props.animation,
-        dragHandler: props.dragHandler,
+        animation: animation,
+        dragHandler: dragHandler,
         onDragEnd: (dragEvent, indexs, keys) => {
           console.info("keys =>", keys);
 
@@ -588,7 +598,7 @@ const { prefixCls } = useStyle("table");
 }
 
 .@{prefix-cls} {
-  --at-apply: h-full;
+  --at-apply: h-full flex-1;
   :deep(.draggables) {
     // border: 1px solid red;
     td:first-child {

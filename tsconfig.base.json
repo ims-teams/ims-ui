@@ -34,7 +34,7 @@
     // 引入 ES 的功能库
     "lib": [],
     // 默认引入的模块类型声明
-    "types": [],
+    "types": ["vite/client"],
     // 路径别名设置
     "paths": {
       "@ims-ui/*": ["packages/*"]

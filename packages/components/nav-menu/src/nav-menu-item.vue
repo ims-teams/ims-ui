@@ -24,11 +24,11 @@
       :currentIndex="breadCrumb ? index : undefined"
     ></nav-menu-item>
   </a-sub-menu>
+  <!-- :id="data[fieldNames.value].toString()" -->
   <a-menu-item
     v-bind="$attrs"
     :label="`${data[fieldNames.label]}`"
     :title="`${data[fieldNames.label]}`"
-    :id="data[fieldNames.value]"
     :data-node="data"
     :key="`${data[fieldNames.value]}-${
       breadCrumb === true ? currentIndex : 'BC'
@@ -49,26 +49,41 @@ defineOptions({
   name: COMPONENT_NAME,
 });
 
-const props = withDefaults(defineProps<NavMenuItemProps>(), {
-  data: () => {
-    return {};
+const {
+  data = {},
+  breadCrumb,
+  currentIndex,
+  fieldNames = {
+    children: "children",
+    label: "label",
+    value: "value",
+    icon: "icon",
+    leaf: "leaf",
+    disabled: "disabled",
+    level: "level",
   },
-  breadCrumb: () => false,
-  currentIndex: undefined,
-  fieldNames: () => {
-    return {
-      children: "children",
-      label: "label",
-      value: "value",
-      icon: "icon",
-      leaf: "leaf",
-      disabled: "disabled",
-      level: "level",
-    };
-  },
-});
+} = defineProps<NavMenuItemProps>();
 
-const { data, breadCrumb, currentIndex, fieldNames } = props;
+// const { data, breadCrumb, currentIndex, fieldNames }  = withDefaults(defineProps<NavMenuItemProps>(), {
+//   data: () => {
+//     return {};
+//   },
+//   breadCrumb: () => false,
+//   currentIndex: undefined,
+//   fieldNames: () => {
+//     return {
+//       children: "children",
+//       label: "label",
+//       value: "value",
+//       icon: "icon",
+//       leaf: "leaf",
+//       disabled: "disabled",
+//       level: "level",
+//     };
+//   },
+// });
+
+// const { data, breadCrumb, currentIndex, fieldNames } = toRefs(props);
 let children = computed(() => {
   return data[fieldNames.children] || false;
 });

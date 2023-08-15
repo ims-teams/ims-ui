@@ -12,49 +12,47 @@
   </div>
   <hr />
   <div>
-    <div>
-      <ImsJsonViewer :data="datas"></ImsJsonViewer>
-      <div>{{ val }}</div>
-    </div>
-    <p>button - demo {{ msg }} {{ testParms }}</p>
-
-    <ims-select
-      :api="getNodes"
-      :params="testParms"
-      class="mb-2"
-      :fieldNames="fieldNames"
-    ></ims-select>
-    <a-space class="mb-2">
-      <ImsButton @click="changeTest">默认插槽内容</ImsButton>
-
-      <ImsButton :text="msg">123</ImsButton>
-
-      <ImsPopconfirmButton text="aaa" :canConfirm="false"></ImsPopconfirmButton>
-    </a-space>
-
-    <!-- :optionsApi="getNodes({ is_show_tree: '1' })" -->
-    <ImsCascader
-      v-model:value="val"
-      :fieldNames="fieldNames"
-      :params="cascaderParms"
-      :api="getNodes"
-    ></ImsCascader>
-
-    <p @click="changeText">修改1122</p>
-    <p class="border-2 border-solid border-light-200">input demo xxx</p>
-
-    <ims-table :dataSource="dataSource" :columns="columns" sortable></ims-table>
+    <ImsCascader></ImsCascader>
+    <!-- <div
+      id="test-leafer"
+      class="border-1 border-solid border-red-500 w-full h-300px"
+    ></div> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { Leafer, Rect } from "leafer-ui";
 import { getNodes } from "@ims-ui/apis";
+
+import { ImsCascader } from "ims-ui";
+
 const msg = ref("abc");
+
+console.info("import.meta.env =>", import.meta.env);
 
 const val = ref(["zhejiang", "hangzhou", "xihu"]);
 
 const fieldNames = { label: "name", value: "id" };
+
+const leafer = ref();
+
+nextTick(() => {
+  // leafer.value = new Leafer({
+  //   view: "test-leafer", // 支持 window 、div、canvas 标签对象， 可使用id字符串(不用加 # 号)
+  //   // width: 600,
+  //   // height: 600,
+  // });
+  // const rect = new Rect({
+  //   x: 100,
+  //   y: 100,
+  //   width: 200,
+  //   height: 200,
+  //   draggable: true,
+  //   fill: "#32cd79", // 背景色
+  // });
+  // leafer.value.add(rect);
+});
 
 const testParms = ref<any>({
   a: "bbc",

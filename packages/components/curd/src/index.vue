@@ -147,7 +147,7 @@
     </div>
     <!-- {{ slotsNames }} -->
     <div :class="`${prefixCls}-table`">
-      <!-- <ims-json-viewer :data="lists" editable showLine></ims-json-viewer> -->
+      <!-- <ims-json-viewer :data="paginations" editable showLine></ims-json-viewer> -->
       <ims-table
         v-if="!initialing"
         v-bind="$attrs"
@@ -371,8 +371,6 @@ const filterFormRef = ref();
 const filterEl = ref();
 
 const props = withDefaults(defineProps<CurdProps>(), {
-  // store 是必须传的
-  // store:() => false,
   uri: () => false,
   actions: () => {
     return [
@@ -571,6 +569,8 @@ const {
   filtering,
   filterForm,
 } = storeToRefs(curdStore);
+console.info("curd .lists =>", lists);
+
 const { initializeCurd, getLists, destroy, recovery } = curdStore;
 
 const slots = useSlots();

@@ -1,20 +1,20 @@
-import { defineComponent } from 'vue';
-import { ImsNavMenu } from '../../nav-menu';
+import { defineComponent } from "vue";
+import { ImsNavMenu } from "../../nav-menu";
 
 export default defineComponent({
-  name: 'BreadCrumb',
+  name: "ImsBreadCrumb",
   props: {
     data: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   setup(props, { emit }) {
     // console.info('ctx =>',ctx);
     const onClick = ({ key }) => {
-      const realKey = key.split('-')[0];
-      console.info('realKey =>', realKey);
-      emit('click', realKey);
+      const realKey = key.split("-")[0];
+      console.info("realKey =>", realKey);
+      emit("click", realKey);
     };
     return () => (
       <ImsNavMenu
@@ -26,5 +26,5 @@ export default defineComponent({
         triggerSubMenuAction="hover"
       ></ImsNavMenu>
     );
-  }
+  },
 });

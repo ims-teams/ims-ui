@@ -1,9 +1,10 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import { resolve } from "node:path";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 export default defineConfig({
   // 增加插件的使用
-  plugins: [vue()],
+  plugins: [vue(), vueJsx()],
   build: {
     lib: {
       entry: "./index.ts",

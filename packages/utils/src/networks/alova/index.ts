@@ -1,14 +1,14 @@
-import { createAlova } from 'alova';
-import VueHook from 'alova/vue';
-import GlobalFetch from 'alova/GlobalFetch';
+import { createAlova } from "alova";
+import VueHook from "alova/vue";
+import GlobalFetch from "alova/GlobalFetch";
 
 // alova instance
 const alova = createAlova({
-  baseURL: '/api',
+  baseURL: "/api",
   statesHook: VueHook,
   requestAdapter: GlobalFetch(),
   beforeRequest(request) {
-    request.config.headers['Authorization-Refresh-Token'] = 'vvvv';
+    request.config.headers["Authorization-Refresh-Token"] = "vvvv";
     // console.info(request.config);
   },
   responded: {
@@ -37,10 +37,10 @@ const alova = createAlova({
       return data;
     },
     onError(error, method) {
-      console.info('onError.error =>', error);
-      console.info('onError.method =>', method);
-    }
-  }
+      console.info("onError.error =>", error);
+      console.info("onError.method =>", method);
+    },
+  },
 });
 
 export { alova };

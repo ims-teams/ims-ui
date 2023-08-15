@@ -7,8 +7,9 @@
     "dev": "vite"
   },
   "dependencies": {
+    "@ims-ui/apis": "workspace:^",
     "ims-ui": "workspace:^",
-    "@ims-ui/apis": "workspace:^"
+    "leafer-ui": "1.0.0-beta.8"
   },
   "keywords": [],
   "author": "Van Chin",

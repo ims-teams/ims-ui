@@ -8,10 +8,19 @@
 </template>
 <script lang="ts" setup>
 import { useStyle } from "@ims-ui/hooks";
+import { getEnvs, createNetWork } from "@ims-ui/utils";
 import { ImsCascaderProps } from "@ims-ui/types";
 import type { Method } from "alova";
-//
+
 const { prefixCls } = useStyle("cascader");
+
+import { isFunction } from "@vue/shared";
+
+const network = createNetWork({ aa: "bb", dd: "dd" });
+
+console.info("network =>", network);
+
+// const { pkg, lastBuildTime } = __APP_INFO__;
 
 const COMPONENT_NAME = "ImsCascader";
 defineOptions({
@@ -27,13 +36,16 @@ const getOptions = async () => {
     optionsData.value = options;
     return;
   }
-  if (api) {
+  // console.info("isFunction =>", );
+  if (isFunction(api)) {
     loading.value = true;
     const apiMethod = api(params) as Method;
     apiMethod.setName("api-cascader");
     const res = await apiMethod.send(true);
     loading.value = false;
     optionsData.value = res || [];
+  } else {
+    // 使用 network 发送请求 获取组件需要的数据
   }
 };
 

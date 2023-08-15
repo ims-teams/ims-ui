@@ -1,6 +1,6 @@
 {
   "name": "ims-ui",
-  "version": "0.0.50",
+  "version": "0.0.1",
   "description": "ims-ui",
   "main": "dist/ims-ui.umd.js",
   "module": "dist/ims-ui.mjs",

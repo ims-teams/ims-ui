@@ -20,7 +20,7 @@ export interface CurdProps {
   // store: CurdStore;
   store: any;
   tables: object;
-  uri: string | false;
+  uri?: string | false;
   actions?: CurdAction[];
 }
 
