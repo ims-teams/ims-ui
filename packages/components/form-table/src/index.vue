@@ -1,12 +1,12 @@
 <template>
   <div :class="prefixCls">
-    <ImsJsonViewer
+    <!-- <ImsJsonViewer
       title="parseedColumns"
       :data="parseedColumns"
       editable
       showLine
     >
-    </ImsJsonViewer>
+    </ImsJsonViewer> -->
     <a-table
       v-bind="$attrs"
       :columns="parseedColumns"
@@ -57,7 +57,7 @@
               column.component.name === 'ACheckbox' ||
               column.component.name === 'ASwitch'
                 ? ''
-                : 'w-full'
+                : 'w-fulls'
             "
             v-model:[column.component.model]="record[column.dataIndex]"
           >
@@ -118,6 +118,7 @@ const parseedColumn = () => {
         title: "序号",
         dataIndex: "index",
         key: "index",
+        fixed:"left",
         align: "center",
         width: 80,
         component: {
@@ -152,16 +153,14 @@ const modelValue = defineModel<object[]>("value", {
   default: [],
 });
 
-// dataSource.value = cloneDeep(dataList);
 
-console.info("dataSource =>", dataSource.value);
 
 const onAddRow = () => {
   modelValue.value.push(cloneDeep(initial));
 };
 
 const onDeleteRow = (index: number) => {
-  console.info("onDeleteRow =>");
+  // console.info("onDeleteRow =>");
   modelValue.value.splice(index, 1);
 };
 
@@ -218,6 +217,7 @@ watch(
 );
 </script>
 
+
 <style lang="less" scoped>
 @prefix-cls: ~"@{namespace}-form-table";
 
@@ -247,6 +247,27 @@ watch(
         display: block;
       }
     }
+  }
+}
+</style>
+
+<style>
+.ims-form-table {
+  .ant-table-cell {
+    .ant-select-selection-placeholder {
+      text-align: left;
+    }
+    .ant-select-selection-item {
+      text-align: left;
+    }
+  }
+
+  
+}
+
+.ims-form-table-select-popup {
+  .ant-select-item-option {
+    text-align: left;
   }
 }
 </style>

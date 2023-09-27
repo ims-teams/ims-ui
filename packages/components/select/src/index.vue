@@ -18,6 +18,7 @@ import { isFunction, isObject } from "@vue/shared";
 
 const COMPONENT_NAME = "ImsSelect";
 defineOptions({
+  inheritAttrs:false,
   name: COMPONENT_NAME,
 });
 
