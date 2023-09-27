@@ -1,7 +1,13 @@
 import type { SelectProps as ASelectProps } from "ant-design-vue";
 export interface ImsSelectProps {
-  /** api 接口函数 */
-  api?: Function;
+  /** options 接口函数 */
+  api?:
+    | Function
+    | {
+        uri: string;
+        params?: object;
+        options?: object;
+      };
   /** 接口参数 */
   params?: {
     [key: string]: any;

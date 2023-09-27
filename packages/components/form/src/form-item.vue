@@ -33,7 +33,7 @@ import type { ImsFormItemProps } from "@ims-ui/types";
 
 import { getCurrentInstance } from "vue";
 
-const COMPONENT_NAME = "ImsForm";
+const COMPONENT_NAME = "ImsFormItem";
 defineOptions({
   name: COMPONENT_NAME,
   inheritAttrs: false,

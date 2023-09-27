@@ -23,7 +23,7 @@ export default defineComponent({
         class="bread-crumb-menu"
         mode="horizontal"
         bread-crumb={true}
-        triggerSubMenuAction="hover"
+        triggerSubMenuAction="click"
       ></ImsNavMenu>
     );
   },

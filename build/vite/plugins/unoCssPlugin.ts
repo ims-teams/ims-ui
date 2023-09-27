@@ -12,9 +12,10 @@ import transformerDirectives from "@unocss/transformer-directives";
 export function configUnoCss(): PluginOption[] {
   const plugins: PluginOption[] = [];
   const unoCss = UnoCSS({
-    shortcuts:[
+    shortcuts: [
       ["wh-full", "w-full h-full"],
-      ["f-c-c", "flex justify-center items-center"]
+      ["f-c-c", "flex justify-center items-center"],
+      ["border-red", "border-1 border-red border-solid"],
     ],
     presets: [
       presetAttributify(),

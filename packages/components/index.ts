@@ -6,6 +6,8 @@ export * from "./json-viewer";
 
 export * from "./select";
 
+export * from "./tag-select";
+
 export * from "./nav-menu";
 
 export * from "./bread-crumb";
@@ -21,3 +23,15 @@ export * from "./curd";
 export * from "./icon-picker";
 
 export * from "./table";
+
+export * from "./spin";
+
+export * from "./section-title";
+
+export * from "./form-divider";
+
+export * from "./uploader";
+
+export * from "./form-table";
+
+export * from "./overlay-scrollbar";

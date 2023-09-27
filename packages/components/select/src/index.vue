@@ -2,41 +2,52 @@
   <a-select
     :class="prefixCls"
     v-bind="$attrs"
-    :options="optionsData"
+    :options="data"
     :loading="loading"
   ></a-select>
 </template>
 <script lang="ts" setup>
+import { useRequest } from "vue-hooks-plus";
 import { useStyle } from "@ims-ui/hooks";
+import { createNetWork } from "@ims-ui/utils";
 import { ImsSelectProps } from "@ims-ui/types";
-import type { Method } from "alova";
-// cascader
+
 const { prefixCls } = useStyle("select");
+
+import { isFunction, isObject } from "@vue/shared";
 
 const COMPONENT_NAME = "ImsSelect";
 defineOptions({
   name: COMPONENT_NAME,
 });
 
-const loading = ref(false);
-
+// const loading = ref(false);
 const { api, options, params } = defineProps<ImsSelectProps>();
 
-const optionsData = ref<ImsSelectProps["options"]>([]);
-
-const getOptions = async () => {
-  if (options) {
-    optionsData.value = options;
-    return;
+const { data, loading, run } = useRequest(
+  () => {
+    console.info("api =>", api);
+    if (isFunction(api)) {
+      return api(params);
+    }
+    if (isObject(api)) {
+      const network = createNetWork();
+      return network.get({ url: api.uri, params });
+    }
+  },
+  {
+    manual: true,
   }
-  if (api) {
-    loading.value = true;
-    const apiMethod = api(params) as Method;
-    apiMethod.setName("api-select");
-    const res = await apiMethod.send(true);
+);
 
-    loading.value = false;
-    optionsData.value = res || [];
+const getOptions = () => {
+  if (options) {
+    // optionsData.value = options;
+    data.value = options;
+    return;
+  } else {
+    run();
+    return;
   }
 };
 
@@ -48,6 +59,7 @@ watch(
   () => params,
   () => {
     getOptions();
+    // run();
   },
   {
     deep: true,

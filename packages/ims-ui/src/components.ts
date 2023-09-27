@@ -13,6 +13,13 @@ import {
   ImsCurd,
   ImsIconPicker,
   ImsTable,
+  ImsSpin,
+  ImsSectionTitle,
+  ImsFormDivider,
+  ImsUploader,
+  ImsTagSelect,
+  ImsFormTable,
+  ImsOverlayScrollbar,
 } from "@ims-ui/components";
 
 export default [
@@ -20,6 +27,7 @@ export default [
   ImsPopconfirmButton,
   ImsJsonViewer,
   ImsSelect,
+  ImsTagSelect,
   ImsBreadCrumb,
   ImsCascader,
   ImsNavMenu,
@@ -28,4 +36,10 @@ export default [
   ImsCurd,
   ImsIconPicker,
   ImsTable,
+  ImsSpin,
+  ImsSectionTitle,
+  ImsFormDivider,
+  ImsUploader,
+  ImsFormTable,
+  ImsOverlayScrollbar,
 ] as Plugin[];

@@ -96,7 +96,7 @@
           </template>
 
           <template v-else-if="name === 'bodyCell'">
-            <template v-if="slotProps.column.formatType === 'INDEX'">
+            <template v-if="slotProps.column.formatType === 3">
               {{
                 (paginations?.current - 1) * paginations?.pageSize +
                 slotProps.index +
@@ -276,6 +276,7 @@ const {
   schemes = [],
   footerBar = true,
   paginations,
+  lists = [],
   columns,
 } = defineProps<ImsTableProps>();
 
@@ -532,15 +533,10 @@ const onResizeColumn = (width: number, column: any) => {
   column.width = width;
 };
 
-console.info("props ");
-
-// console.info('attrs =>', attrs);
+console.info("attrs =>", attrs);
 
 const sortedKeys = ref<string[] | number[]>([]);
 
-sortedKeys.value = map(attrs.dataSource, attrs.rowKey);
-
-console.info("sortedKeys.value =>", sortedKeys.value);
 const tblComponents = ref({});
 
 if (sortable) {
@@ -549,28 +545,23 @@ if (sortable) {
       wrapper: h(ImsTableSortable, {
         rowKey: attrs.rowKey,
         animation: animation,
-        dragHandler: dragHandler,
+        // dragHandler: dragHandler,
         onDragEnd: (dragEvent, indexs, keys) => {
           console.info("keys =>", keys);
 
-          console.info("attrs.dataSource =>", attrs.dataSource);
+          sortedKeys.value = map(lists, attrs.rowKey);
 
+          // 获取拖拽排序后 与 原值的交集 如何能把第一次 拖动 生成的排除掉 可以提高效率
           let sortedIntersectionKeys = intersection(keys, sortedKeys.value);
-
-          console.info("sortedIntersectionKeys", sortedIntersectionKeys);
-
-          // let res = sortBy(dataSource.value, keys);
 
           const sortabledData = sortedIntersectionKeys.map(
             (item) =>
-              attrs.dataSource[
-                attrs.dataSource.findIndex(
-                  (element) => element[attrs.rowKey] == item
-                )
-              ]
+              lists[lists.findIndex((element) => element[attrs.rowKey] == item)]
           );
 
           // const sortabledData = [];
+
+          console.info("onDragEnd.sortabledDataSource =>", sortabledData);
 
           emit("dragEnd", {
             keys: sortedIntersectionKeys,

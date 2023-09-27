@@ -1,4 +1,5 @@
-import { warn, getEnvs } from "@ims-ui/utils";
+// import { warn, getEnvs } from "@ims-ui/utils";
+import { warn } from "@ims-ui/utils";
 
 export const useGlobalSetting = (): Readonly<GlobConfig> => {
   const {
@@ -7,7 +8,7 @@ export const useGlobalSetting = (): Readonly<GlobConfig> => {
     VITE_GLOB_APP_SHORT_NAME,
     VITE_GLOB_API_URL_PREFIX,
     VITE_GLOB_UPLOAD_URL,
-  } = getEnvs();
+  } = import.meta.env;
 
   if (!/[a-zA-Z\_]*/.test(VITE_GLOB_APP_SHORT_NAME)) {
     warn(

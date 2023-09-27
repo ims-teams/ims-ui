@@ -15,9 +15,7 @@ type AntdvGlobalConfigProviderProps = {
   theme?: AntdvThemeColor;
 };
 export const makeInstaller = (components: Plugin[] = []) => {
-  console.info("vvvv");
   const install = (app: App, options?: AntdvGlobalConfigProviderProps) => {
-    console.info("xxxx ins");
     if (app[INSTALLED_KEY]) return;
 
     app[INSTALLED_KEY] = true;

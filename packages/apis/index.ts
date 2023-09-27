@@ -1,4 +1,8 @@
-import { alova } from "@ims-ui/utils";
+import { alova, defHttp } from "@ims-ui/utils";
+
+import { ErrorMessageMode } from "@ims-ui/types";
+import { reject } from "lodash";
+
 export const nodeUri = "stage/v1/nodes";
 
 /**
@@ -15,15 +19,22 @@ export const getNodes = (params?: object) => {
   });
 };
 
-// export const nodeListsApi = (
-//   params = {},
-//   mode: ErrorMessageMode = 'message'
-// ) => {
-//   return defHttp.get(
-//     { url: nodeUri, params },
-//     {
-//       errorMessageMode: mode,
-//       isTransformResponse: false
-//     }
-//   );
-// };
+export const nodeListsApi = (
+  params = {},
+  mode: ErrorMessageMode = "message"
+) => {
+  return defHttp.get(
+    { url: nodeUri, params },
+    {
+      errorMessageMode: mode,
+      isTransformResponse: true,
+    }
+  );
+  // .then((res) => {
+  //   console.info("res =>", res);
+  //   resolve(res);
+  // })
+  // .catch((error) => {
+  //   reject(error);
+  // });
+};

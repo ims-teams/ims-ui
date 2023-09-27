@@ -325,6 +325,8 @@ import { storeToRefs } from "pinia";
 
 import { ImsTableColumn } from "@ims-ui/types";
 
+import { differenceBy,unionBy } from "lodash-es";
+
 import {
   CurdActionEmitEnum,
   CurdActionPositionEnum,
@@ -332,9 +334,89 @@ import {
 } from "@ims-ui/enums";
 import { Table } from "ant-design-vue";
 
-import { CurdProps } from "@ims-ui/types";
+import { CurdProps,CurdAction } from "@ims-ui/types";
 
 const COMPONENT_NAME = "ImsCurd";
+
+const DEFAULT_ACTIONS:CurdAction[] = [
+  {
+    position: "fl",
+    component: "ImsButton",
+    props: {
+      type: "primary",
+      text: "增加",
+      icon: "mingcute:file-import-fill",
+    },
+    emit: "curd-create",
+  },
+  {
+    position: "fl",
+    component: "ImsButton",
+    props: {
+      type: "primary",
+      text: "导入",
+      icon: "mingcute:file-import-fill",
+    },
+    emit: "curd-import",
+  },
+  {
+    position: "fr",
+    component: "ImsButton",
+    props: {
+      type: "primary",
+      text: "导出",
+      icon: "mingcute:file-import-fill",
+    },
+    emit: "curd-export",
+  },
+  {
+    position: "ro",
+    component: "ImsButton",
+    props: {
+      type: "link",
+      text: "查看",
+      gapless: true,
+      size: "small",
+    },
+    emit: "curd-detail",
+  },
+  {
+    position: "ro",
+    component: "ImsButton",
+    props: {
+      type: "link",
+      text: "编辑",
+      gapless: true,
+    },
+    emit: "curd-edit",
+  },
+  {
+    position: "ro",
+    component: "ImsPopconfirmButton",
+
+    props: {
+      canConfirm: false,
+      type: "link",
+      text: "删除",
+      title: "确定要删除此数据么?",
+      gapless: true,
+    },
+    emit: "curd-destroy",
+  },
+  {
+    position: "ro",
+    component: "ImsPopconfirmButton",
+    props: {
+      canConfirm: false,
+      type: "link",
+      text: "恢复",
+      title: "确定要恢复此数据么?",
+      gapless: true,
+    },
+    emit: "curd-recovery",
+  },
+];
+
 defineOptions({
   name: COMPONENT_NAME,
 });
@@ -454,86 +536,15 @@ const props = withDefaults(defineProps<CurdProps>(), {
   },
 });
 
-const defaultActions = [
-  {
-    position: "fl",
-    component: "ImsButton",
-    props: {
-      type: "primary",
-      text: "增加",
-      icon: "mingcute:file-import-fill",
-    },
-    emit: "curd-create",
-  },
-  {
-    position: "fl",
-    component: "ImsButton",
-    props: {
-      type: "primary",
-      text: "导入",
-      icon: "mingcute:file-import-fill",
-    },
-    emit: "curd-import",
-  },
-  {
-    position: "fr",
-    component: "ImsButton",
-    props: {
-      type: "primary",
-      text: "导出",
-      icon: "mingcute:file-import-fill",
-    },
-    emit: "curd-export",
-  },
-  {
-    position: "ro",
-    component: "ImsButton",
-    props: {
-      type: "link",
-      text: "查看",
-      gapless: true,
-      size: "small",
-    },
-    emit: "curd-detail",
-  },
-  {
-    position: "ro",
-    component: "ImsButton",
-    props: {
-      type: "link",
-      text: "编辑",
-      gapless: true,
-    },
-    emit: "curd-edit",
-  },
-  {
-    position: "ro",
-    component: "ImsPopconfirmButton",
 
-    props: {
-      canConfirm: false,
-      type: "link",
-      text: "删除",
-      title: "确定要删除此数据么?",
-      gapless: true,
-    },
-    emit: "curd-destroy",
-  },
-  {
-    position: "ro",
-    component: "ImsPopconfirmButton",
-    props: {
-      canConfirm: false,
-      type: "link",
-      text: "恢复",
-      title: "确定要恢复此数据么?",
-      gapless: true,
-    },
-    emit: "curd-recovery",
-  },
-];
+// differenceBy
+const differenceSet:CurdAction[] = differenceBy(DEFAULT_ACTIONS,props.actions,'emit');
 
-const actions = Object.assign(defaultActions, props.actions);
+console.info('differenceSet =>',differenceSet);
+
+// const actions = Object.assign(DEFAULT_ACTIONS, props.actions,differenceSet);
+
+const actions = unionBy(DEFAULT_ACTIONS,props.actions,'emit');
 
 const selectedRowKeys = ref<any[]>([]); // Check here to configure the default column
 

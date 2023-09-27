@@ -35,6 +35,7 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
     plugins: configVitePlugins(viteEnv, isBuild) as PluginOption[],
     define: {
       __IS_DEVELOPMENT__: JSON.stringify(mode === "development"),
+      __ENV__: JSON.stringify(viteEnv),
     },
 
     server: {

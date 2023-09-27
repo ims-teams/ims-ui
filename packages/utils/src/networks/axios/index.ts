@@ -1,7 +1,7 @@
 // axios配置  可自行根据项目进行更改，只需更改该文件即可，其他文件可以不动
 // The axios configuration can be changed according to the project, just change the file, other files can be left unchanged
 
-import type { AxiosResponse } from "axios";
+import type { AxiosResponse, AxiosRequestConfig } from "axios";
 import type { RequestOptions, Result } from "@ims-ui/types";
 import type { AxiosTransform, CreateAxiosOptions } from "./axiosTransform";
 
@@ -28,6 +28,7 @@ import { getToken } from "../../cache";
 
 const globSetting = useGlobalSetting();
 const urlPrefix = globSetting.urlPrefix;
+
 const { createMessage, createErrorModal, createSuccessModal } = useMessage();
 
 /**
@@ -131,8 +132,13 @@ const transform: AxiosTransform = {
     }
 
     if (apiUrl && isString(apiUrl)) {
+      console.info("apiUrl && isString(apiUrl) =>", apiUrl);
       config.url = `${apiUrl}${config.url}`;
     }
+
+    console.info("config.url =>", config.url);
+
+    console.info("config.apiUrl =>", apiUrl);
     const params = config.params || {};
     const data = config.data || false;
     formatDate && data && !isString(data) && formatRequestDate(data);
@@ -185,6 +191,9 @@ const transform: AxiosTransform = {
   requestInterceptors: (config, options) => {
     // 请求之前处理config
     const token = getToken();
+
+    console.info("requestInterceptors.config =>", config);
+
     console.info("requestInterceptors.token =>", token);
     const refreshToken = getToken(REFRESH_TOKEN_KEY);
     console.info("requestInterceptors.refreshToken =>", refreshToken);
@@ -233,7 +242,7 @@ const transform: AxiosTransform = {
    * @description: 响应错误处理
    */
   responseInterceptorsCatch: (axiosInstance: AxiosResponse, error: any) => {
-    const { t } = useI18n();
+    // const { t } = useI18n();
     // 暂时 取消错误 记录
     // const errorLogStore = useErrorLogStoreWithOut();
     // errorLogStore.addAjaxErrorInfo(error);
@@ -250,16 +259,18 @@ const transform: AxiosTransform = {
 
     try {
       if (code === "ECONNABORTED" && message.indexOf("timeout") !== -1) {
-        errMessage = t("sys.api.apiTimeoutMessage");
+        // errMessage = t("sys.api.apiTimeoutMessage");
+        errMessage = "sys.api.apiTimeoutMessage";
       }
       if (err?.includes("Network Error")) {
-        errMessage = t("sys.api.networkExceptionMsg");
+        // errMessage = t("sys.api.networkExceptionMsg");
+        errMessage = "sys.api.networkExceptionMsg";
       }
 
       if (errMessage) {
         if (errorMessageMode === "modal") {
           createErrorModal({
-            title: t("sys.api.errorTip"),
+            title: "sys.api.errorTip",
             content: errMessage,
           });
         } else if (errorMessageMode === "message") {
@@ -284,7 +295,13 @@ const transform: AxiosTransform = {
   },
 };
 
-function createAxios(opt?: Partial<CreateAxiosOptions>) {
+export const createAxios = (opt?: Partial<CreateAxiosOptions>) => {
+  console.info("createAxios.globSetting =>", globSetting);
+
+  console.info("globSetting.apiUrl =>", globSetting.apiUrl);
+
+  console.info("createAxios.urlPrefix =>", urlPrefix);
+
   return new VAxios(
     // 深度合并
     deepMerge(
@@ -317,9 +334,9 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 消息提示类型
           errorMessageMode: "message",
           // 接口地址
-          apiUrl: globSetting.apiUrl,
+          apiUrl: globSetting.apiUrl ? globSetting.apiUrl : "",
           // 接口拼接地址
-          urlPrefix: urlPrefix,
+          urlPrefix: urlPrefix ? urlPrefix : "",
           //  是否加入时间戳
           joinTime: true,
           // 忽略重复请求
@@ -336,5 +353,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       opt || {}
     )
   );
-}
+};
+
 export const defHttp = createAxios();
+
+export default defHttp;

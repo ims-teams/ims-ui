@@ -1,13 +1,16 @@
 // import { defHttp } from "./axios";
 
-import type { NrlType } from "@ims-ui/types";
+import type { NrlType, CreateAxiosOptions } from "@ims-ui/types";
 import { getEnvs } from "@ims-ui/utils";
+import { NRL_ALOVA, NRL_AXIOS } from "@ims-ui/constants";
+import { createAxios, defHttp } from "./axios";
+// import type {Alova,AlovaOptions} from "alova";
 // const { VITE_NRL } = getEnvs();
 // import
 
 export * from "./alova";
 
-export * from "./axios";
+export { createAxios, defHttp };
 
 // export function getAuthCache<T>(key: BasicKeys) {
 //   const fn = isLocal ? Persistent.getLocal : Persistent.getSession;
@@ -17,16 +20,17 @@ export * from "./axios";
 /**
  * @description 创建网络请求
  */
-export function createNetWork<T>(options?: Recordable, nrl?: NrlType) {
+export function createNetWork<T>(options?: CreateAxiosOptions, nrl?: NrlType) {
   if (nrl === undefined) {
     const { VITE_NRL } = getEnvs();
     nrl = VITE_NRL;
   }
 
-  // if(nrl == )
+  if (nrl === NRL_AXIOS) {
+    return createAxios(options) as T;
+  }
 
-  return {
-    a: "aa",
-    b: "bb",
-  } as T;
+  if (nrl === NRL_ALOVA) {
+    return alova as T;
+  }
 }

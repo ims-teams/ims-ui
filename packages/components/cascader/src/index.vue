@@ -2,50 +2,53 @@
   <a-cascader
     :class="prefixCls"
     v-bind="$attrs"
-    :options="optionsData"
+    :options="data"
     :loading="loading"
   ></a-cascader>
 </template>
 <script lang="ts" setup>
+import { useRequest } from "vue-hooks-plus";
 import { useStyle } from "@ims-ui/hooks";
-import { getEnvs, createNetWork } from "@ims-ui/utils";
+import { createNetWork } from "@ims-ui/utils";
 import { ImsCascaderProps } from "@ims-ui/types";
-import type { Method } from "alova";
 
 const { prefixCls } = useStyle("cascader");
 
-import { isFunction } from "@vue/shared";
-
-const network = createNetWork({ aa: "bb", dd: "dd" });
-
-console.info("network =>", network);
-
-// const { pkg, lastBuildTime } = __APP_INFO__;
+import { isFunction, isObject } from "@vue/shared";
 
 const COMPONENT_NAME = "ImsCascader";
 defineOptions({
   name: COMPONENT_NAME,
 });
 
-const loading = ref(false);
+// const loading = ref(false);
 const { api, options, params } = defineProps<ImsCascaderProps>();
-const optionsData = ref<ImsCascaderProps["options"]>([]);
 
-const getOptions = async () => {
-  if (options) {
-    optionsData.value = options;
-    return;
+const { data, loading, run } = useRequest(
+  () => {
+    console.info(`${COMPONENT_NAME} api =>`, api);
+    console.info(`${COMPONENT_NAME} params =>`, params);
+    if (isFunction(api)) {
+      return api(params);
+    }
+    if (isObject(api)) {
+      const network = createNetWork() as any;
+      return network.get({ url: api.uri, params });
+    }
+  },
+  {
+    manual: true,
   }
-  // console.info("isFunction =>", );
-  if (isFunction(api)) {
-    loading.value = true;
-    const apiMethod = api(params) as Method;
-    apiMethod.setName("api-cascader");
-    const res = await apiMethod.send(true);
-    loading.value = false;
-    optionsData.value = res || [];
+);
+
+const getOptions = () => {
+  if (options) {
+    // optionsData.value = options;
+    data.value = options;
+    return;
   } else {
-    // 使用 network 发送请求 获取组件需要的数据
+    run();
+    return;
   }
 };
 
@@ -57,6 +60,7 @@ watch(
   () => params,
   () => {
     getOptions();
+    // run();
   },
   {
     deep: true,
@@ -78,6 +82,6 @@ watch(
 @prefix-cls: ~"@{namespace}-cascader";
 
 .@{prefix-cls} {
-  --at-apply: min-w-400px w-full;
+  --at-apply: min-w-200px w-full;
 }
 </style>
