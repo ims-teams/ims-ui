@@ -46,6 +46,7 @@ const props = withDefaults(defineProps<ImsFormItemProps>(), {});
 const emit = defineEmits([]);
 const emitEventHandler = (field: string, event: string, params: any) => {
   const eo = `${field}-${event}`;
+  console.info('eo =>',eo);
   // console.info('currentInstance =>',currentInstance);
   currentInstance.emitsOptions[eo] = null;
 

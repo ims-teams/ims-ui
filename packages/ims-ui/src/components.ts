@@ -20,6 +20,7 @@ import {
   ImsTagSelect,
   ImsFormTable,
   ImsOverlayScrollbar,
+  ImsEditor,
 } from "@ims-ui/components";
 
 export default [
@@ -42,4 +43,5 @@ export default [
   ImsUploader,
   ImsFormTable,
   ImsOverlayScrollbar,
+  ImsEditor,
 ] as Plugin[];

@@ -19,3 +19,5 @@ export * from "./form-divider";
 export * from "./uploader";
 
 export * from "./form-table";
+
+export * from "./editor";

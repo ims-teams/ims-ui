@@ -25,6 +25,7 @@
     "@ims-ui/types": "workspace:^",
     "@ims-ui/utils": "workspace:^",
     "@shopify/draggable": "^1.1.0",
+    "@wangeditor/editor": "^5.1.23",
     "nanoid": "^5.0.1",
     "overlayscrollbars": "^2.3.2",
     "overlayscrollbars-vue": "^0.5.5"

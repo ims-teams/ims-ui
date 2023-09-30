@@ -14,12 +14,26 @@
   <div>
     <div class="my-2 p-2 border-1 border-solid border-red-300">
       <div class="  mb-2">
+
+        <ims-editor></ims-editor>
         
         <!-- <ImsOverlayScrollbar  class="w-200px h-300px" always>
           <ims-form-table :pagination="false" bordered  :columns="columns" :lists="dataSource" :dataSource="dataSource" ></ims-form-table>
         </ImsOverlayScrollbar> -->
 
-        <ims-form-table  bordered :initial="initial" size="middle" :columns="columns" v-model:value="dataSource"  ></ims-form-table>
+        <ims-form-table  
+          bordered 
+          :initial="initial" 
+          size="middle" 
+          @name-change="onNameChange"
+          @deleted="onDeleted"
+          @added="onAdded"
+          :columns="columns"
+          v-model:value="dataSource"
+
+          :hab="false"
+          
+        ></ims-form-table>
 
         <ImsJsonViewer
           title="dataSource"
@@ -51,6 +65,8 @@ import { ref,h } from "vue";
 import type { UploadProps } from 'ant-design-vue';
 import type { ImsFormTableColumn } from "@ims-ui/types";
 
+import { Icon } from "@iconify/vue";
+
 // import {Sortable} from '@shopify/draggable';
 
 // const draggableRef = ref();
@@ -71,9 +87,18 @@ import type { ImsFormTableColumn } from "@ims-ui/types";
 // });
 
 
+const onNameChange = ({value,selectedOptions,index}) => {
+  console.info('onNameChange.value =>',value,'selectedOptions =>',selectedOptions,'index =>',index);
+}
 
 
- 
+const onDeleted = (totality:number) => {
+  console.info('onDeleted =>',totality);
+}
+const onAdded = (totality:number) => {
+  console.info('onAdded =>',totality);
+}
+
 const fileList = ref<UploadProps['fileList']>([
   {
     uid: '-1',
@@ -91,7 +116,7 @@ const dataSource = ref<object[]>([]);
 const initial = {
     id: "",
     name: "",
-    age: 0,
+    age: false,
     address: '',
     status:true,
   };
@@ -114,7 +139,11 @@ const columns:ImsFormTableColumn[] = [
             align:'center',
             component:{
               name:'ASelect',
-              
+              field: "titleId",
+              events:{
+                change:['value','selectedOptions','$event'],
+              },
+            
               props:{
                 placeholder:'请选择列头',
                 allowClear:true,
@@ -173,26 +202,12 @@ const columns:ImsFormTableColumn[] = [
             key: 'address',
             align:'center',
             component:{
-              name:'ASelect',
+              name:'AInput',
               props:{
                 model:'value',
                 placeholder:'请选择类型',
                 allowClear:true,
-                options:[
-                {
-    value: 'jack',
-    label: 'Jack',
-  },
-  {
-    value: 'lucy',
-    label: 'Lucy',
-  },
-  {
-    value: 'disabled',
-    label: 'Disabled',
-    disabled: true,
-  },
-                ]
+                
               }
             }
           }

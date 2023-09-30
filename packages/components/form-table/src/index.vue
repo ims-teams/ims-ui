@@ -1,22 +1,31 @@
 <template>
   <div :class="prefixCls">
-    <!-- <ImsJsonViewer
+    <ImsJsonViewer
       title="parseedColumns"
       :data="parseedColumns"
       editable
       showLine
     >
-    </ImsJsonViewer> -->
+    </ImsJsonViewer>
+    
+    <div :class="`${prefixCls}-action-bar`" v-if="hab">
+      <div :class="`${prefixCls}-action-bar-left`"> </div>
+      <div :class="`${prefixCls}-action-bar-right`">
+          <a-input placeholder="请按 名称/姓名 搜索物料" class="w-full"></a-input>
+      </div>
+    </div>
     <a-table
       v-bind="$attrs"
       :columns="parseedColumns"
       :data-source="modelValue"
       @change="onChange"
+      ref="tableRef"
     >
       <template #headerCell="{ title, column }">
         <template v-if="column.key === 'index'">
           <div>
             <a-button
+              v-if="hab === false"
               size="small"
               type="primary"
               shape="circle"
@@ -24,6 +33,7 @@
             >
               <icon icon="ant-design:plus-outlined" :inline="true" />
             </a-button>
+            <span v-else>{{ title }}</span>
           </div>
         </template>
       </template>
@@ -48,16 +58,17 @@
         </template>
 
         <template v-else>
-        
-          <!-- {{ column.component.model }} -->
+          <!-- v-on="column.component?.emitsEvents || {}" -->
           <component
             :is="column.component.name"
             v-bind="column.component.props"
+            v-on="parseEvents(column,index)"
+            :index="index"
             :class="
               column.component.name === 'ACheckbox' ||
               column.component.name === 'ASwitch'
                 ? ''
-                : 'w-fulls'
+                : 'w-full'
             "
             v-model:[column.component.model]="record[column.dataIndex]"
           >
@@ -78,6 +89,8 @@ import { Icon } from "@iconify/vue";
 import { cloneDeep } from "lodash-es";
 import { nanoid } from "nanoid";
 
+import type { ComponentInternalInstance } from "vue";
+
 import type { PaginationProps } from "ant-design-vue";
 
 const { prefixCls } = useStyle("form-table");
@@ -87,6 +100,8 @@ defineOptions({
   name: COMPONENT_NAME,
 });
 
+const tableRef = ref();
+
 // const loading = ref(false);
 const {
   api,
@@ -94,13 +109,68 @@ const {
   params,
   initial,
   columns,
+  hab = false
+
 } = defineProps<ImsFormTableProps>();
+
+
+
+const modelValue = defineModel<object[]>("value", {
+  default: [],
+});
+
+const currentInstance:ComponentInternalInstance = getCurrentInstance();
+
+// const emits = defineEmits([]);
+
+const emits = defineEmits<{
+  'added':[totality:number],
+  'delete':[totality:number],
+}>();
+// 动态生成 emit 事件
+const emitEventHandler = (field: string, event: string, params: any) => {
+  const eo = `${field}-${event}`;
+  
+  currentInstance.emitsOptions[eo] = null;
+  emits(eo, params);
+};
+const parseEvents = (column:ImsFormTableColumn,index:number) => {
+  // console.info('component =>',column.component,'index =>',index);
+  if(column.component.hasOwnProperty("events")){
+    // console.info('需要解析事件 =>',column.component,column.component.events);
+        let emitsEvents:any = {};
+        for (const key in column.component.events) {
+        emitsEvents[key] = (...args: any) => {
+          let params:any = reactive({
+            index:0
+          });
+          column.component.events[key].map((pkey: string, index: number) => {
+            params[pkey] = args[index];
+          });
+          // params 想增加一个 index，但这里无法获取index
+          // console.info('emitsEvents.params =>',params);
+
+          // console.info('modelValue 222 =>',modelValue.value);
+          params.index = calcIndex(index) - 1;
+          emitEventHandler(column.key as string, key, params);
+        };
+      }
+    return emitsEvents;
+  } else {
+    // console.info('不需要解析事件');
+    return {};
+  }
+  
+}
+
+
 
 
 
 const parseedColumns = ref<ImsFormTableColumn[]>([]);
 
-const parseedColumn = () => {
+const parseColumn = () => {
+  console.info('hab =>',hab);
   let hasIndexColumn = false;
   parseedColumns.value = columns.map((column: ImsFormTableColumn) => {
     
@@ -129,7 +199,7 @@ const parseedColumn = () => {
   }
 };
 
-parseedColumn();
+parseColumn();
 
 
 
@@ -147,21 +217,18 @@ const onChange = (pagination:PaginationProps) => {
 const calcIndex = (index:number) => {
   return (currentPagination.value.current - 1) * currentPagination.value.pageSize + index + 1;
 }
-const dataSource = ref<object[]>([]);
-
-const modelValue = defineModel<object[]>("value", {
-  default: [],
-});
-
 
 
 const onAddRow = () => {
   modelValue.value.push(cloneDeep(initial));
+  emits('added',modelValue.value.length);
 };
 
 const onDeleteRow = (index: number) => {
   // console.info("onDeleteRow =>");
   modelValue.value.splice(index, 1);
+
+  emits('delete',modelValue.value.length);
 };
 
 const { data, loading, run } = useRequest(
@@ -223,6 +290,12 @@ watch(
 
 .@{prefix-cls} {
   --at-apply: min-w-100px w-full;
+
+
+  &-action-bar {
+    
+    --at-apply: flex justify-between items-center p-2 mb-2;
+  }
   // border: 1px solid red;
   &-index-wrapper {
     // border: 1px solid red;

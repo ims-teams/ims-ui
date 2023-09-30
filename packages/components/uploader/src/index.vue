@@ -12,6 +12,7 @@
 <script lang="ts" setup>
 import { useStyle } from "@ims-ui/hooks";
 import { ImsUploaderProps } from "@ims-ui/types";
+import { Icon } from "@iconify/vue";
 import type { UploadProps } from 'ant-design-vue';
 const { prefixCls } = useStyle("uploader");
 const COMPONENT_NAME = "ImsUploader";

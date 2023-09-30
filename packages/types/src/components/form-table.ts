@@ -3,6 +3,7 @@ import type { SelectProps as ASelectProps } from "ant-design-vue";
 import type { TableColumnType } from "ant-design-vue";
 
 export interface ImsFormTableColumn extends TableColumnType {
+  dataIndex: string;
   /**
    * 组件
    */
@@ -11,6 +12,15 @@ export interface ImsFormTableColumn extends TableColumnType {
      * 组件标识/标签 名称
      */
     name: string;
+    /** 字段 */
+    field?: string;
+    /**
+     * 组件事件
+     */
+    events?: {
+      /** 事件名称 */
+      [key: string]: string[];
+    };
 
     /**
      * 组件 v-model key value check
@@ -39,6 +49,13 @@ export interface ImsFormTableProps {
     [key: string]: any;
   };
   options?: ASelectProps["options"];
+  /**
+   * 操作栏 配置
+   */
+  hab?: boolean | object;
+  /**
+   * 表格列配置
+   */
   columns: ImsFormTableColumn[];
   /**
    * 表格数据
