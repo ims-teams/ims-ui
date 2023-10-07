@@ -15,13 +15,15 @@
     <div class="my-2 p-2 border-1 border-solid border-red-300">
       <div class="  mb-2">
 
-        <ims-editor></ims-editor>
+        <!-- <ims-editor></ims-editor> -->
         
         <!-- <ImsOverlayScrollbar  class="w-200px h-300px" always>
           <ims-form-table :pagination="false" bordered  :columns="columns" :lists="dataSource" :dataSource="dataSource" ></ims-form-table>
         </ImsOverlayScrollbar> -->
 
-        <ims-form-table  
+        
+          
+          <ims-form-table  
           bordered 
           :initial="initial" 
           size="middle" 
@@ -29,18 +31,19 @@
           @deleted="onDeleted"
           @added="onAdded"
           :columns="columns"
+        
           v-model:value="dataSource"
 
           :hab="false"
           
         ></ims-form-table>
 
-        <ImsJsonViewer
+        <!-- <ImsJsonViewer
           title="dataSource"
           :data="dataSource"
           editable
           showLine
-        ></ImsJsonViewer>
+        ></ImsJsonViewer> -->
       </div>
       <!-- <div>
         <ImsSectionTitle title="draggable">draggable</ImsSectionTitle>
@@ -48,13 +51,13 @@
           <div class="item border-1 border-red border-solid p-2 mb-2" v-for="n in 6"> {{ n }} </div>
         </div>
       </div> -->
-      <div>
+      <!-- <div>
         <ims-json-viewer :data="fileList"></ims-json-viewer>
       </div>
       <ims-uploader 
         v-model:value="fileList"
         action="https://lc.serve.ims.inlin.cloud/tms/v1/files"
-        list-type="picture-card"></ims-uploader>
+        list-type="picture-card"></ims-uploader> -->
     </div>
     
   </div>

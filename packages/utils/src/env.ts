@@ -54,7 +54,7 @@ export const getConfigFileName = (env: Record<string, any>) => {
 export function getEnvs() {
   const ENV_NAME = getConfigFileName(import.meta.env);
 
-  console.info("import.meta.env =>", import.meta.env);
+  // console.info("import.meta.env =>", import.meta.env);
 
   let ENVS = (import.meta.env.DEV
     ? // Get the global configuration (the configuration will be extracted independently when packaging)
@@ -65,7 +65,7 @@ export function getEnvs() {
     ENVS = __ENV__ as unknown as GlobEnvConfig;
   }
 
-  console.info("ENVS =>", ENVS);
+  // console.info("ENVS =>", ENVS);
 
   const { VITE_GLOB_APP_SHORT_NAME } = ENVS;
 

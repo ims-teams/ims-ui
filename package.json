@@ -12,7 +12,8 @@
     "release": "tsx build/scripts/release.ts",
     "type:app": "vue-tsc -p tsconfig.app.json --noEmit --composite false",
     "type:mv": "tsx build/scripts/dts-mv.ts",
-    "dev": "pnpm --filter playground run dev"
+    "dev": "pnpm --filter playground run dev",
+    "dev:docs": "pnpm --filter docs run dev"
   },
   "keywords": [],
   "author": "Van Chin",
@@ -26,6 +27,7 @@
     "@ims-ui/utils": "workspace:^",
     "@shopify/draggable": "^1.1.0",
     "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "nanoid": "^5.0.1",
     "overlayscrollbars": "^2.3.2",
     "overlayscrollbars-vue": "^0.5.5"

@@ -192,9 +192,9 @@ const transform: AxiosTransform = {
     // 请求之前处理config
     const token = getToken();
 
-    console.info("requestInterceptors.config =>", config);
+    // console.info("requestInterceptors.config =>", config);
 
-    console.info("requestInterceptors.token =>", token);
+    // console.info("requestInterceptors.token =>", token);
     const refreshToken = getToken(REFRESH_TOKEN_KEY);
     console.info("requestInterceptors.refreshToken =>", refreshToken);
 
@@ -296,11 +296,11 @@ const transform: AxiosTransform = {
 };
 
 export const createAxios = (opt?: Partial<CreateAxiosOptions>) => {
-  console.info("createAxios.globSetting =>", globSetting);
+  // console.info("createAxios.globSetting =>", globSetting);
 
-  console.info("globSetting.apiUrl =>", globSetting.apiUrl);
+  // console.info("globSetting.apiUrl =>", globSetting.apiUrl);
 
-  console.info("createAxios.urlPrefix =>", urlPrefix);
+  // console.info("createAxios.urlPrefix =>", urlPrefix);
 
   return new VAxios(
     // 深度合并

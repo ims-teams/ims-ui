@@ -1,12 +1,7 @@
 <template>
   <div :class="prefixCls">
-    <ImsJsonViewer
-      title="parseedColumns"
-      :data="parseedColumns"
-      editable
-      showLine
-    >
-    </ImsJsonViewer>
+    
+    <ImsJsonViewer :data="modelValue" title="modelValue"></ImsJsonViewer>
     
     <div :class="`${prefixCls}-action-bar`" v-if="hab">
       <div :class="`${prefixCls}-action-bar-left`"> </div>
@@ -58,7 +53,6 @@
         </template>
 
         <template v-else>
-          <!-- v-on="column.component?.emitsEvents || {}" -->
           <component
             :is="column.component.name"
             v-bind="column.component.props"
@@ -92,6 +86,7 @@ import { nanoid } from "nanoid";
 import type { ComponentInternalInstance } from "vue";
 
 import type { PaginationProps } from "ant-design-vue";
+import ImsJsonViewer from "@ims-ui/components/json-viewer";
 
 const { prefixCls } = useStyle("form-table");
 
@@ -125,21 +120,23 @@ const currentInstance:ComponentInternalInstance = getCurrentInstance();
 
 const emits = defineEmits<{
   'added':[totality:number],
-  'delete':[totality:number],
+  'deleted':[totality:number],
 }>();
 // 动态生成 emit 事件
 const emitEventHandler = (field: string, event: string, params: any) => {
   const eo = `${field}-${event}`;
   
   currentInstance.emitsOptions[eo] = null;
+  console.info('eo =>',eo);
+  console.info('params =>',params);
   emits(eo, params);
 };
 const parseEvents = (column:ImsFormTableColumn,index:number) => {
   // console.info('component =>',column.component,'index =>',index);
-  if(column.component.hasOwnProperty("events")){
+  if(column.component.hasOwnProperty("events")) {
     // console.info('需要解析事件 =>',column.component,column.component.events);
-        let emitsEvents:any = {};
-        for (const key in column.component.events) {
+    let emitsEvents:any = {};
+    for (const key in column.component.events) {
         emitsEvents[key] = (...args: any) => {
           let params:any = reactive({
             index:0
@@ -153,8 +150,9 @@ const parseEvents = (column:ImsFormTableColumn,index:number) => {
           // console.info('modelValue 222 =>',modelValue.value);
           params.index = calcIndex(index) - 1;
           emitEventHandler(column.key as string, key, params);
-        };
-      }
+      };
+    }
+    // console.info('emitsEvents =>',emitsEvents);
     return emitsEvents;
   } else {
     // console.info('不需要解析事件');
@@ -164,15 +162,14 @@ const parseEvents = (column:ImsFormTableColumn,index:number) => {
 }
 
 
-
-
-
 const parseedColumns = ref<ImsFormTableColumn[]>([]);
 
 const parseColumn = () => {
-  console.info('hab =>',hab);
+  // console.info('hab =>',hab);
   let hasIndexColumn = false;
   parseedColumns.value = columns.map((column: ImsFormTableColumn) => {
+
+    console.info('parseedColumns.map.column =>',column);
     
     if (!column.component.hasOwnProperty("model") && column.key !== "index") {
       column.component.model = "value";
@@ -228,7 +225,7 @@ const onDeleteRow = (index: number) => {
   // console.info("onDeleteRow =>");
   modelValue.value.splice(index, 1);
 
-  emits('delete',modelValue.value.length);
+  emits('deleted',modelValue.value.length);
 };
 
 const { data, loading, run } = useRequest(
