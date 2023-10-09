@@ -21,6 +21,7 @@ import {
   ImsFormTable,
   ImsOverlayScrollbar,
   ImsEditor,
+  ImsVtable,
 } from "@ims-ui/components";
 
 export default [
@@ -44,4 +45,5 @@ export default [
   ImsFormTable,
   ImsOverlayScrollbar,
   ImsEditor,
+  ImsVtable,
 ] as Plugin[];

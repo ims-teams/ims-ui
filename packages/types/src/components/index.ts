@@ -21,3 +21,5 @@ export * from "./uploader";
 export * from "./form-table";
 
 export * from "./editor";
+
+export * from "./vtable";

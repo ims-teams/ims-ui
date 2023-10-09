@@ -37,3 +37,5 @@ export * from "./form-table";
 export * from "./overlay-scrollbar";
 
 export * from "./editor";
+
+export * from "./vtable";

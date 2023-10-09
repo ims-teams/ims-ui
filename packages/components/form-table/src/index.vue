@@ -127,8 +127,8 @@ const emitEventHandler = (field: string, event: string, params: any) => {
   const eo = `${field}-${event}`;
   
   currentInstance.emitsOptions[eo] = null;
-  console.info('eo =>',eo);
-  console.info('params =>',params);
+  // console.info('eo =>',eo);
+  // console.info('params =>',params);
   emits(eo, params);
 };
 const parseEvents = (column:ImsFormTableColumn,index:number) => {
@@ -169,7 +169,7 @@ const parseColumn = () => {
   let hasIndexColumn = false;
   parseedColumns.value = columns.map((column: ImsFormTableColumn) => {
 
-    console.info('parseedColumns.map.column =>',column);
+    // console.info('parseedColumns.map.column =>',column);
     
     if (!column.component.hasOwnProperty("model") && column.key !== "index") {
       column.component.model = "value";
