@@ -12,5 +12,7 @@ export interface ImsVtableProps {
     [key: string]: any;
   };
   /** 数据数组 */
-  dataSource: object[];
+  // dataSource: object[];
+  /** 配置项目 */
+  options: object;
 }

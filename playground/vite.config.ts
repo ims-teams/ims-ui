@@ -69,6 +69,10 @@ export default ({ mode, command }: ConfigEnv): UserConfig => {
           find: /^@ims-ui\/(.*)$/,
           replacement: resolve(__dirname, "..", "packages", "$1", "index.ts"),
         },
+        {
+          find: /@\//,
+          replacement: resolve(__dirname, "src/") + "/",
+        },
       ],
     },
   };

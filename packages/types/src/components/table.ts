@@ -10,13 +10,13 @@ export interface ImsTableProps {
   /**
    * 行拖拽
    */
-  sortable: boolean;
-  animation: number;
+  sortable?: boolean;
+  animation?: number;
   dragHandler?: string | undefined;
 
   dataTable?: object;
   columns: any[];
-  schemes: any[];
+  schemes?: any[];
   lists?: object[];
   paginations?: any;
   footerBar?: boolean | object;

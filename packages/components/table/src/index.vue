@@ -38,9 +38,9 @@
       />
     </a-space>
   </DefineCurd>
-  <div :class="`${prefixCls}-wrapper flex flex-col bg-white  w-full`">
+  <div :class="`${prefixCls}-wrapper`">
     <!-- <ims-json-viewer :data="lists"></ims-json-viewer> -->
-    <div class="flex-1 w-full" ref="wrapperEl">
+    <div  :class="`${prefixCls}-content`"  ref="contentElRef">
       <a-table
         :class="prefixCls"
         v-bind="$attrs"
@@ -234,6 +234,7 @@
         show-quick-jumper
       ></a-pagination>
     </div>
+
   </div>
 </template>
 
@@ -268,7 +269,7 @@ const COMPONENT_NAME = "ImsTable";
 defineOptions({
   name: COMPONENT_NAME,
 });
-
+const { prefixCls } = useStyle("table");
 const {
   sortable = false,
   animation = 600,
@@ -309,20 +310,35 @@ defineExpose({
   tableRef,
 });
 
-const wrapperEl = ref(null);
+const contentElRef = ref(null);
 
-const { height: wrapperHeight } = useElementSize(wrapperEl);
-
-console.info("wrapperHeight =>", wrapperHeight);
+console.info("contentElRef =>", contentElRef.value);
 
 const tableScroll = ref({
   x: "max-content",
-  // y: 300,
+  // y: 400,
   // y: wrapperHeight.value - 56,
 });
 
-useResizeObserver(wrapperEl, (entries) => {
+onMounted(()=>{
+//   console.group('onMounted');
+
+//   console.info('contentElRef =>',contentElRef.value);
+
+
+//   // const { height: wrapperHeight } = useElementSize(document.querySelector('.ims-table'));
+
+// // console.info('wrapperHeight =>',wrapperHeight);
+
+//   console.groupEnd();
+})
+
+// 表格高度 
+useResizeObserver(contentElRef, (entries) => {
+  // console.info('entries =>',entries);
   const entry = entries[0];
+
+  // console.info('entry =>',entry);
 
   const { height } = entry.contentRect;
   // tableScroll.value.x = width;
@@ -332,7 +348,12 @@ useResizeObserver(wrapperEl, (entries) => {
   //   tableScroll.value.y = 180 - 60;
   // }
 
-  tableScroll.value.y = height - 60;
+  // tableScroll.value.y = height - 120;
+
+  tableScroll.value.y = height;
+
+
+  // console.info('tableScroll.value.y =>',tableScroll.value.y);
 
   // console.info("tableScroll =>", tableScroll.value);
 });
@@ -410,7 +431,7 @@ const slotsNames = Object.keys(slots);
 
 const attrs = useAttrs();
 
-console.info("attrs =>", attrs);
+
 
 states.value.currentColumns = columns;
 
@@ -533,7 +554,7 @@ const onResizeColumn = (width: number, column: any) => {
   column.width = width;
 };
 
-console.info("attrs =>", attrs);
+
 
 const sortedKeys = ref<string[] | number[]>([]);
 
@@ -575,18 +596,34 @@ if (sortable) {
   };
 }
 
-const { prefixCls } = useStyle("table");
+
 </script>
 
 <style lang="less" scoped>
 @prefix-cls: ~"@{namespace}-table";
 
 .@{prefix-cls}-wrapper {
-  // border: 1px solid red;
-  --at-apply: h-full;
+  border: 1px solid red;
+  --at-apply: h-full w-full flex flex-col bg-transparent;
 
   overflow: hidden;
 }
+
+
+.@{prefix-cls}-content {
+  
+  --at-apply: h-full flex-1 w-full;
+
+  overflow: hidden;
+}
+
+
+.@{prefix-cls}-footer-bar {
+  border: 1px solid green;
+  --at-apply: w-full;
+}
+
+
 
 .@{prefix-cls} {
   --at-apply: h-full flex-1;

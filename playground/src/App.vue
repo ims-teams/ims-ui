@@ -1,76 +1,6 @@
 <template>
-  <div
-    style="
-      text-align: center;
-      padding: 16px;
-      color: red;
-      font-size: 18px;
-      font-weight: bold;
-    "
-  >
-    测试场地
-  </div>
-  <hr />
-  <div>
-    <div class="my-2 p-2 border-1 border-solid border-red-300">
-      <div class="  mb-2">
-
-        <!-- <ims-editor></ims-editor> -->
-        
-        <!-- <ImsOverlayScrollbar  class="w-200px h-300px" always>
-          <ims-form-table :pagination="false" bordered  :columns="columns" :lists="dataSource" :dataSource="dataSource" ></ims-form-table>
-        </ImsOverlayScrollbar> -->
-
-        <ims-section-title>vtable</ims-section-title>
-
-
-        <div class="w-full h-400px">
-          <ims-vtable :dataSource="records" class="w-full"></ims-vtable>
-        </div>
-
-        
-
-        <!-- <div id="tableContainer" ref="vtableRef" style="height:400px;width: 100%;" class="w-full bd-red"></div> -->
-
-        
-          
-          <!-- <ims-form-table  
-          bordered 
-          :initial="initial" 
-          size="middle" 
-          @name-change="onNameChange"
-          @deleted="onDeleted"
-          @added="onAdded"
-          :columns="columns"
-        
-          v-model:value="dataSource"
-
-          :hab="false"
-          
-        ></ims-form-table> -->
-
-        <!-- <ImsJsonViewer
-          title="dataSource"
-          :data="dataSource"
-          editable
-          showLine
-        ></ImsJsonViewer> -->
-      </div>
-      <!-- <div>
-        <ImsSectionTitle title="draggable">draggable</ImsSectionTitle>
-        <div class="draggable-wrapper" ref="draggableRef">
-          <div class="item border-1 border-red border-solid p-2 mb-2" v-for="n in 6"> {{ n }} </div>
-        </div>
-      </div> -->
-      <!-- <div>
-        <ims-json-viewer :data="fileList"></ims-json-viewer>
-      </div>
-      <ims-uploader 
-        v-model:value="fileList"
-        action="https://lc.serve.ims.inlin.cloud/tms/v1/files"
-        list-type="picture-card"></ims-uploader> -->
-    </div>
-    
+  <div class="w-full h-full p-0 m-0">
+    <router-view></router-view>
   </div>
 </template>
 
@@ -79,13 +9,11 @@ import { ref,h } from "vue";
 import type { UploadProps } from 'ant-design-vue';
 import type { ImsFormTableColumn } from "@ims-ui/types";
 
-import { ListTable,TYPES,themes } from "@visactor/vtable";
+
 
 import { Icon } from "@iconify/vue";
 
 
-
-const vtableRef = ref();
 
 
 
@@ -340,6 +268,100 @@ const records = [
 ];
 
 
+const vColumns = [
+    {
+        "field": "230517143221027",
+        "title": "Order ID",
+        "width": "auto",
+        
+    },
+    {
+        "field": "230517143221030",
+        "title": "Customer ID",
+        "width": "auto"
+    },
+    {
+        "field": "230517143221032",
+        "title": "产品名称",
+        "width": "auto",
+        "headerStyle":{
+          "textAlign":"center",
+          "color":"red"
+        },
+        // "style":{
+        //   "textAlign":"center"
+        // },
+        
+    },
+    {
+        "field": "230517143221023",
+        "title": "Category",
+        "width": "auto"
+    },
+    {
+        "field": "230517143221034",
+        "title": "Sub-Category",
+        "width": "auto"
+    },
+    {
+        "field": "230517143221037",
+        "title": "Region",
+        "width": "auto"
+    },
+    {
+        "field": "230517143221024",
+        "title": "City",
+        "width": "auto"
+    },
+    {
+        "field": "230517143221029",
+        "title": "Order Date",
+        "width": "auto"
+    },
+    {
+        "field": "230517143221042",
+        "title": "Quantity",
+        "width": "auto"
+    },
+    {
+        "field": "230517143221040",
+        "title": "Sales",
+        "width": "auto"
+    },
+    {
+        "field": "230517143221041",
+        "title": "Profit",
+        "width": "auto"
+    }
+];
+
+
+
+
+const options = {
+  records:records,
+  columns:vColumns,
+  
+  allowFrozenColCount: 1,
+  frozenColCount: 1,
+  showFrozenIcon: false,
+  // rightFrozenColCount:2,
+  // autoWidth adaptive
+  widthMode: 'adaptive',
+  heightMode: 'auto',
+  
+  // autoFillWidth:true,
+  // dragHeaderMode:'columns',
+  dragHeaderMode:'column',
+  title:{
+    textStyle:{
+      textAlign:"center"
+    }
+  },
+};
+
+
+console.info('options =>',options);
 
 onMounted(()=>{
 // 创建 VTable 实例
