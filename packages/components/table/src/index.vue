@@ -350,7 +350,7 @@ useResizeObserver(contentElRef, (entries) => {
 
   // tableScroll.value.y = height - 120;
 
-  tableScroll.value.y = height;
+  tableScroll.value.y = height - 60;
 
 
   // console.info('tableScroll.value.y =>',tableScroll.value.y);
@@ -603,7 +603,7 @@ if (sortable) {
 @prefix-cls: ~"@{namespace}-table";
 
 .@{prefix-cls}-wrapper {
-  border: 1px solid red;
+  // border: 1px solid red;
   --at-apply: h-full w-full flex flex-col bg-transparent;
 
   overflow: hidden;
@@ -619,7 +619,7 @@ if (sortable) {
 
 
 .@{prefix-cls}-footer-bar {
-  border: 1px solid green;
+  // border: 1px solid green;
   --at-apply: w-full;
 }
 

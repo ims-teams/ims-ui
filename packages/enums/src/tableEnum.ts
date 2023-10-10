@@ -1,17 +1,17 @@
-import { useEnumeration } from '@ims-ui/hooks';
+import { useEnumeration } from "@ims-ui/hooks";
 
 /**
  * 表格数据列类型
  */
 export enum TableColumnTypeEnum {
   // 操作
-  OPERATIONS = 'OPERATIONS',
+  OPERATIONS = "OPERATIONS",
   // 日期
-  DATE = 'DATE',
+  DATE = "DATE",
   // 时间
-  DATETIME = 'DATETIME',
+  DATETIME = "DATETIME",
   // 序号
-  INDEX = 'INDEX'
+  INDEX = "INDEX",
 }
 
 /**
@@ -24,7 +24,7 @@ export enum TableColumnCombinationModeEnum {
   // 覆盖
   OVERLAY = 2,
   // 覆盖合并
-  OVERLAY_MERGE = 3
+  OVERLAY_MERGE = 3,
 }
 
 /**
@@ -36,29 +36,29 @@ export enum ColumnFormatTypeEnum {
   // 时间
   DATETIME = 2,
   // 序号
-  INDEX = 3
+  INDEX = 3,
 }
 export const ColumnFormatTypeEnums = [
   {
-    name: 'date',
-    label: '日期',
+    name: "date",
+    label: "日期",
     value: ColumnFormatTypeEnum.DATE,
-    color: 'blue',
-    icon: 'ant-design:check-outlined'
+    color: "blue",
+    icon: "ant-design:check-outlined",
   },
   {
-    name: 'datetime',
-    label: '时间',
+    name: "datetime",
+    label: "时间",
     value: ColumnFormatTypeEnum.DATETIME,
-    color: 'blue',
-    icon: 'ant-design:close-outlined'
+    color: "blue",
+    icon: "ant-design:close-outlined",
   },
   {
-    name: 'index',
-    label: '序号',
+    name: "index",
+    label: "序号",
     value: ColumnFormatTypeEnum.INDEX,
-    color: 'blue',
-    icon: 'ant-design:close-outlined'
-  }
+    color: "blue",
+    icon: "ant-design:close-outlined",
+  },
 ];
 export const ColumnFormatTypeEnumArray = useEnumeration(ColumnFormatTypeEnums);
