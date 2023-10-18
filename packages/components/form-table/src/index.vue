@@ -1,7 +1,7 @@
 <template>
   <div :class="prefixCls">
     
-    <ImsJsonViewer :data="modelValue" title="modelValue"></ImsJsonViewer>
+    <!-- <ImsJsonViewer :data="modelValue" title="modelValue"></ImsJsonViewer> -->
     
     <div :class="`${prefixCls}-action-bar`" v-if="hab">
       <div :class="`${prefixCls}-action-bar-left`"> </div>

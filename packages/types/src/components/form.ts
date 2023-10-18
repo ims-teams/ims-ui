@@ -30,5 +30,6 @@ export interface ImsFormItemProps {
 export interface ImsFormProps {
   items: IFormItem[] | object;
   validateInfos?: object;
+
   eoPrefix?: string;
 }

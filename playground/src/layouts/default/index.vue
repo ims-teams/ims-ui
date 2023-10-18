@@ -79,6 +79,8 @@ const selectedKeys = ref<string[]>(['1']);
 
   .main {
     border: 1px solid red;
+    width: calc(100% - 200px);
+    overflow: hidden;
   }
 }
   

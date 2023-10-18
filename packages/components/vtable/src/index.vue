@@ -34,14 +34,8 @@ const vtableWrapperRef = ref(null);
 const { width, height } = useElementSize(vtableWrapperRef);
 
 const onVtableRefResize = ({ width, height }: { width: number; height: number }) => {
-  console.info('onVtableRefResize => width',width);
-  console.info('onVtableRefResize => height',height);
-
-  // console.info('vtableInstance =>',vtableInstance.value);
-
-  // vtableInstance.value.widthMode = 'autoWidth';
-
-  // vtableInstance.value.renderWithRecreateCells();
+  // console.info('onVtableRefResize => width',width);
+  // console.info('onVtableRefResize => height',height);
 }
 
 
@@ -70,7 +64,7 @@ onMounted(()=>{
 @prefix-cls: ~"@{namespace}-v-table";
 
 .@{prefix-cls}-wrapper {
-  --at-apply: w-full box-border;
+  --at-apply: w-full h-full box-border;
 }
 
 .@{prefix-cls} {

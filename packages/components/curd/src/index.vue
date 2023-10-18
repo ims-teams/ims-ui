@@ -36,16 +36,27 @@
     </a-space>
   </define-operations>
 
-  <div :class="prefixCls">
+  <div :class="prefixCls" ref="imsElRef" :style="{
+     
+      position: 'relative',
+      border: '1px solid #ebedf0',
+     
+    }">
     <div :class="`${prefixCls}-filter`" v-if="!initialing" ref="filterEl">
+
+ 
       <ims-form
         v-if="filters.spans && filterForm"
         ref="filterFormRef"
         v-bind="filters"
+        layout="inline"
+        :labelCol="{
+          style:'width:0;display:none'
+        }"
         :validateInfos="filterForm.validateInfos"
       ></ims-form>
-
-      <div :class="`${prefixCls}-filter-condition-bar`" v-if="conditionBar">
+      
+      <div :class="`${prefixCls}-filter-condition-bar`" v-if="conditionBar" >
         <fieldset>
           <legend>筛选条件</legend>
           <a-tag v-for="n in 20" :key="n" color="blue" closable class="mb-2"
@@ -87,6 +98,13 @@
             />
           </template>
 
+          
+          <ims-button
+            :loading="filtering"
+            text="重置"
+            icon="ant-design:retweet-outlined"
+            @click="onFilterFormReset"
+          />
           <ims-button
             type="primary"
             :loading="filtering"
@@ -94,22 +112,18 @@
             icon="ant-design:search-outlined"
             @click="onQuery"
           />
-          <ims-button
-            :loading="filtering"
-            text="重置"
-            icon="ant-design:retweet-outlined"
-            @click="onFilterFormReset"
-          />
           <a-space :size="0">
+            <!-- -->
             <ims-button
               type="link"
               :gapless="true"
               text="展开搜索"
               @click="onFilterFormSearch"
-              v-if="filters.spans > 48"
+              v-if="filters.spans > 48" 
+              
             />
 
-            <a-dropdown placement="bottomLeft" :trigger="['click']">
+            <a-dropdown v-if="false" placement="bottomLeft" :trigger="['click']">
               <icon
                 icon="tabler:settings-down"
                 :inline="true"
@@ -141,13 +155,174 @@
                 </a-menu>
               </template>
             </a-dropdown>
+            <div @click="onAdvancedFilter">
+              <ims-button
+              type="link"
+              :gapless="true"
+              text="高级筛选"
+              
+              
+            />
+              <icon
+                icon="ant-design:down-outlined"
+                :inline="true"
+                color="#1677ff"
+                class="cursor-pointer"
+              />
+            </div>
           </a-space>
         </a-space>
       </div>
     </div>
+    <!--  -->
+    <a-drawer
+    v-model:open="advancedFiltering"
+    :headerStyle="{display:'none'}"
+
+    :getContainer="()=> imsElRef"
+    :closable="false"
+
+    placement="top"
+    :mask="true"
+    
+    root-class-name="advanced-filter"
+    :root-style="{ position: 'absolute !important' }"
+  
+    title="高级筛选"
+    height="auto"
+    :maskStyle="{
+      background:'rgba(0, 0, 0, 0.01)'
+    }"
+    :bodyStyle="{
+      padding:'16px'
+    }"
+   
+    
+  >
+  <div class="">
+    <ims-form
+        v-if="filters.spans && filterForm"
+        ref="filterFormRef"
+        v-bind="filters"
+        layout="vertical"
+        :validateInfos="filterForm.validateInfos"
+      ></ims-form>
+  </div>
+    <template #footer>
+      <div class="flex justify-between items-center">
+        <div>
+          <a-space>
+          <template v-for="(action, index) in actions">
+            <component
+              :is="action.component"
+              :key="`action-${index}`"
+              v-bind="action.props"
+              @click="onAction(action.emit, {})"
+              v-if="
+                action.position ===
+                CurdActionPositionEnum.FILTER_ACTION_BAR_LEFT
+              "
+            />
+          </template>
+        </a-space>
+        </div>
+        <div>
+          <a-space>
+          <template v-for="(action, index) in actions">
+            <component
+              v-if="
+                action.position ===
+                CurdActionPositionEnum.FILTER_ACTION_BAR_RIGHT
+              "
+              :is="action.component"
+              :key="`action-${index}`"
+              v-bind="action.props"
+              @click="onAction(action.emit, { a: 'aa', b: 'b' })"
+            />
+          </template>
+
+          
+          <ims-button
+            :loading="filtering"
+            text="重置"
+            icon="ant-design:retweet-outlined"
+            @click="onFilterFormReset"
+          />
+          <ims-button
+            type="primary"
+            :loading="filtering"
+            text="查询"
+            icon="ant-design:search-outlined"
+            @click="onQuery"
+          />
+          <a-space :size="0">
+            <!-- -->
+            <ims-button
+              type="link"
+              :gapless="true"
+              text="展开搜索"
+              @click="onFilterFormSearch"
+              v-if="filters.spans > 48" 
+              
+            />
+
+            <a-dropdown v-if="false" placement="bottomLeft" :trigger="['click']">
+              <icon
+                icon="tabler:settings-down"
+                :inline="true"
+                color="#1677ff"
+                class="cursor-pointer"
+              />
+              <template #overlay>
+                <a-menu>
+                  <a-menu-item :disabled="filters.spans < 48">
+                    <a-checkbox
+                      v-model:checked="conditionBar"
+                      :disabled="filters.spans < 48"
+                      >筛选条件</a-checkbox
+                    >
+                  </a-menu-item>
+                  <a-menu-divider />
+                  <a-menu-item>
+                    <a-checkbox v-model:checked="immediateSearch"
+                      >立即搜索</a-checkbox
+                    >
+                  </a-menu-item>
+                  <a-menu-item>
+                    <template #icon>
+                      <icon icon="ant-design:ellipsis-outlined"></icon>
+                    </template>
+
+                    <a href="javascript:;">其他设置</a>
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
+            <div @click="onAdvancedFilter">
+              <ims-button
+              type="link"
+              :gapless="true"
+              text="简单筛选"
+              
+              
+            />
+              <icon
+                icon="ant-design:up-outlined"
+                :inline="true"
+                color="#1677ff"
+                class="cursor-pointer"
+              />
+            </div>
+          </a-space>
+        </a-space>
+        </div>
+      </div>
+    </template>
+  </a-drawer>
     <!-- {{ slotsNames }} -->
     <div :class="`${prefixCls}-table`">
       <!-- <ims-json-viewer :data="paginations" editable showLine></ims-json-viewer> -->
+      <!-- {{ paginations }} -->
       <ims-table
         v-if="!initialing"
         v-bind="$attrs"
@@ -452,6 +627,19 @@ const filterFormRef = ref();
 
 const filterEl = ref();
 
+const imsElRef = ref();
+
+const advancedFiltering = ref(false);
+
+const onAdvancedFilter = () => {
+  console.info('onAdvancedFilter =>');
+  advancedFiltering.value = !advancedFiltering.value;
+}
+
+const getContainer = () => {
+  return imsElRef.value;
+}
+
 const props = withDefaults(defineProps<CurdProps>(), {
   uri: () => false,
   actions: () => {
@@ -669,6 +857,8 @@ defineExpose({
   filterForm,
 });
 </script>
+
+
 
 <style lang="less" scoped>
 @prefix-cls: ~"@{namespace}-curd";

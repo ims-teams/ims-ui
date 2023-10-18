@@ -224,7 +224,7 @@
       <div>
         <slot name="footer-action"></slot>
       </div>
-
+      
       <a-pagination
         v-bind="paginations"
         @change="onPaginationChange"
